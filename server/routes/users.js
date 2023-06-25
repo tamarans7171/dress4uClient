@@ -7,7 +7,6 @@ const router = express.Router();
 router.get("/" , async(req,res)=> {
 
   try{
-
     let data = await UserModel
     .find({})
     res.json(data);

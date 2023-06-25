@@ -1,0 +1,80 @@
+.titleTypeDresses{
+    color: #b74160; 
+}
+
+
+.divider {
+    display: flex;
+}
+.divider:before, .divider:after {
+    content: "";
+    flex: 1;
+}
+.line {
+    align-items: center;
+    margin: 1em 2em;
+    color: #b74160;
+}
+.line:before, .line:after {
+    height: 1px;
+    margin: 0 1em;
+}
+
+.double-razor:before, .double-razor:after {
+    height: 3px;
+    box-shadow: 0 -0.5px 0 #b74160, 0 0.5px 0 #b74160;
+    border-width: 0;
+}
+
+.messegeThereIsNotMatchDressesType{
+        text-align: center;
+        font-size: 18px;
+    
+}
+
+.mapContainer{
+    display: flex;
+    align-items: center;
+}
+
+.mapColorGreen{
+    width: 22px;
+    height: 22px;
+    background: green;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 20px;
+    
+}
+.mapColorRed{
+    width: 22px;
+    height: 22px;
+    background: red;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.containerButtonsDresses{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.l-design-widhtSubscriptionDress {
+    max-width: 40rem;
+    padding: 1rem;
+}
+
+.input__fieldwidhtSubscriptionDress {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    font-size: x-large;
+    height: 42px;
+    border: 3px solid currentColor;
+    padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+    color: currentColor;
+    background: transparent;
+    border-radius: var(--size-radius);
+}

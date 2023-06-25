@@ -1,0 +1,87 @@
+.h2Details{
+    text-align: center;
+}
+.details{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --color-light: white;
+    --color-dark: #212121;
+    --color-signal: #dea31b;
+    /* --color-background: var(--color-light); */
+    --color-text: var(--color-dark);
+    --color-accent: var(--color-signal);
+    --size-bezel: .5rem;
+    --size-radius: 4px;
+    line-height: 1.4;
+    font-family: "Inter", sans-serif;
+    font-size: calc(0.6rem + 0.4vw);
+    color: var(--color-text);
+    background: var(--color-background);
+    font-weight: 300;
+    padding: 0 calc(var(--size-bezel) * 3);
+}
+
+.card--accentDetails {
+    --color-background: rgba(255, 255, 255, 0.431);
+    --color-accent: var(--color-light);
+    color: #b74160;
+}
+.card--accentDetails {
+    --color-background: rgba(255, 255, 255, 0.431);
+    --color-accent: var(--color-light);
+    color: #b74160;
+}
+.cardDetails {
+    width: 418px;
+    box-shadow: 2px 1px 17px 5px #b74160 !important;
+    margin: 0 auto;
+    min-height: 4vh;
+    background: #ffffff1c;
+    /* background: var(--color-background); */
+    padding: calc(4 * var(--size-bezel));
+    margin-top: 8;
+    margin-top: 12px;
+    border-radius: var(--size-radius);
+    border: 3px solid var(--color-shadow, currentColor);
+    /* box-shadow: 0.5rem 0.5rem 0 black; */
+}
+.input__labelDetails {
+    color: #b74160;
+    position: absolute;
+    right: 77px;
+    top: -7px;
+    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
+    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
+    background: rgb(255, 255, 255);
+    white-space: nowrap;
+    z-index: 998;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    /* background: var(--color-background); */
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.2;
+}
+/* .input__fieldDetails:focus+.input__labelDetails,
+.input__fieldDetails:not(:placeholder-shown)+.input__labeDetailsd {
+	transform: translate(0.25rem, -65%) scale(0.8);
+	color: var(--color-accent);
+} */
+
+.inputDetails {
+	position: relative;
+	margin:3px
+}
+
+
+.input__fieldDetails {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	border: 3px solid currentColor;
+	padding: calc(var(--size-bezel) * 1.5) var(--size-bezel);
+	color: currentColor;
+	background: transparent;
+	border-radius: var(--size-radius);
+}

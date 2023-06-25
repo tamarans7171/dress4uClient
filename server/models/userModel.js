@@ -32,7 +32,7 @@ exports.validateUser = (_reqBody) => {
     address: Joi.object({
       city: Joi.string().min(2).max(100),
       street: Joi.string().min(2).max(100),
-      numHouse: Joi.number().min(2).max(1000),
+      numHouse: Joi.number().max(1000),
     }).required(),
     phone: Joi.string().min(5).max(10).required(),
     password: Joi.string().min(6).max(30).required(),

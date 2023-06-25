@@ -1,0 +1,53 @@
+.PermitDresses {
+    padding: 89px 107px 0 0;
+    height: 77vh;
+}
+.meesegeNoDresses{
+    text-align: center;
+}
+.iconPermit{
+    position: absolute;
+}
+
+.itemImage{
+    position: relative;
+}
+
+.iconPermit:nth-of-type(1){
+     left: 50px;
+    bottom: 30px;
+}
+
+.iconPermit:nth-of-type(2){
+     right: 50px;
+    bottom: 30px;
+}
+
+.css-1633um2-MuiPaper-root {
+    width: 300px;
+    height: 300px;
+}
+
+.permitBtn{
+  
+    color: white!important;    
+    display: flex!important;
+    width: 80%!important;
+    height: 50px!important;
+    background: #b74160!important;
+    margin: 19px auto!important;}
+  
+  .permitBtn:hover{
+    color: #b74160!important;
+    background: white!important;
+    border: #b74160 solid 2px;
+  }
+
+  .css-1ytlwq5-MuiAlert-icon{
+     margin-left: 12px;
+    }
+    .css-1pxa9xg-MuiAlert-message {
+        
+    margin-left: 10px;
+
+    }

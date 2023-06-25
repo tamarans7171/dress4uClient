@@ -1,0 +1,207 @@
+.dress{
+    padding: 80px 0;
+}
+.carouselImages{
+    position: relative;
+    height: 555px;
+    width: 802px;
+}
+.rowDressDetails{
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 17px;
+    justify-content: space-around;
+   
+}
+.row{
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    /* margin-right: calc(-.5 * var(--bs-gutter-x)); */
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+.detailsDress{
+    padding: 5px;
+}
+.container-fluid{
+    width: 99%;
+    justify-content: center;
+    align-items: center;
+}
+
+hr:nth-of-type(2){
+    margin-top: 50px;
+}
+.spanArea{
+    font-weight: 700;
+}
+.col-6{flex:0 0 auto;width:45%}
+
+.styleDiv{
+    box-shadow: 0px 1px 13px 0px #000;
+    margin-left: 3px;
+    margin-right: 3px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+.priceDress {
+    font-weight: bolder;
+    font-size: 28px;
+}
+
+.colorCircle {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+.rowUpDetails{
+    align-items: center;
+    justify-content: space-between;
+    align-items: center;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    /* margin-right: calc(-.5 * var(--bs-gutter-x)); */
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+.buttonDetails{
+    font-size: large;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* border-style: solid; */
+    border-color: #b74160 ;
+    border-radius: 10px;
+    text-align: center;
+    color: #b74160 ;
+    background-color:rgb(255, 255, 255);
+    /* width: 120px; */
+    height: 60px;
+    margin-bottom: 15px;
+}
+.buttonDetails:hover{
+  color: white;
+  background: #b74160 ;
+  /* background-color:rgb(247, 215, 211) */
+
+}
+.buttonDetails a{
+  text-decoration: none;
+  color: #b74160 ;
+}
+.buttonDetails:hover a{
+  color: white;
+}
+
+.card--accentAdd {
+    --color-background: rgba(255, 255, 255, 0.431);
+    --color-accent: var(--color-light);
+    color: #b74160;
+}
+.cardComment {
+    border: solid #b74160 1px;
+    box-shadow: solid #b74160 1px;
+    box-shadow: 0px 2px 10px 1px #b74160;
+    margin: 0 auto;
+    min-height: 43vh;
+    background: #ffffff1c;
+    padding-right: 40px;
+    padding-left: 40px;
+    padding-top: 10px;
+        margin-top: calc(4 * var(--size-bezel));
+  
+}
+.input__labelComment{
+    --size-bezel: .5rem;
+    font-size: 17px;
+    color: #b74160;
+    position: absolute;
+    left: -144px;
+    top: 16px;
+    padding: calc(var(--size-bezel) * 0.75) calc(var(--size-bezel) * 0.5);
+    margin: calc(var(--size-bezel) * 0.75 + 3px) calc(var(--size-bezel) * 0.5);
+    background: rgb(255, 255, 255);
+    white-space: nowrap;
+    z-index: 998;
+    transform: translate(0, 0);
+    transform-origin: 0 0;
+    transition: transform 120ms ease-in;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.input__fieldAdd:focus+.input__labelComment,
+.input__fieldAdd:not(:placeholder-shown)+.input__labelComment {
+	transform: translate(0.25rem, -65%) scale(0.8);
+	/* color: var(--color-accent); */
+}
+
+.comment{
+    margin-bottom: 6px;
+    height: 100px;
+    border: solid #b74160 1px;
+    box-shadow: solid #b74160 1px;
+    box-shadow: 0px 2px 10px 1px #b74160;
+    width: 703px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.containerComments{
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 111px;
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+    justify-content: center;
+
+}
+
+.l-design-widhtComment{
+    
+        padding: 1rem;
+        width: 727px;
+    
+} 
+.awssld__content > img, .awssld__content > video {
+
+    object-fit: contain; 
+}
+
+.CommentMessege{
+    width: 100%;
+    background: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #514a50;
+    font-size: 20px;
+}
+.CommentMessege a{
+    color: #514a50;
+}
+
+.CommentMessege a:hover{
+    color: black;
+}

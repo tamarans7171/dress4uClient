@@ -1,0 +1,47 @@
+.sonalMenu {
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 80px 0;
+}
+.contentSonal{
+    width: 80%;
+}
+.sideBar {
+    /* overflow-x: hidden; */
+    width: 20%;
+    right: 0;
+    z-index: 1;
+    height: 88.7vh;
+    background: #cb94a3;
+    padding: 0;
+    position: fixed;
+    margin: 0px;
+}
+.liSideBar, .lidetails{
+    justify-content: space-evenly;
+    display: flex;
+    FONT-WEIGHT: 700;
+    FONT-SIZE: 17PX;
+    list-style: none;
+    color: #b74160;
+    border-bottom: solid #b74160 2px;
+    padding: 31px 16px;
+    
+}
+.lidetails{
+    text-shadow: 8px 2px 7px #D8AAAA;
+}
+.liSideBar:nth-last-of-type(){
+    border-bottom: none;
+
+}
+.liSideBar:hover{
+    color: white;
+    background: #b74160;
+}
+
+.activeLi{
+    color: white;
+    background: #b74160;
+}

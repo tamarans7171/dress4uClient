@@ -1,0 +1,24 @@
+.productUp{
+    background:rgb(237 37 255 / 26%);
+    height: 345px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 23px 23px 0px 0px;
+    background-position: center;
+    margin-bottom: 4px;
+    color: #b74160;
+}
+.productDown h3{
+    margin-bottom: 2px;
+}
+.containerProducts .row{
+    padding-left: 7px;
+    justify-content: space-evenly;
+}
+.allProductsDiv{
+    width: 65%;
+}
+
+.messegeThereIsNotMatchDresses{
+    text-align: center;
+}
