@@ -13,8 +13,8 @@ import {
   StarBorder,
   CalendarMonthOutlined,
 } from "@mui/icons-material";
+
 function mapStateToProps(state) {
-  // const {state}=state
   return {
     user: state.User.user,
   };
@@ -22,9 +22,9 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps)(function AllProducts(props) {
   const { user } = props;
   const [tempDresses, setTempDresses] = useState();
-  const [tempSetDresses, setSetTempDresses] = useState();
+  // const [tempSetDresses, setSetTempDresses] = useState();
   const [dresses, setDresses] = useState();
-  const [setsDresses, setSetsDresses] = useState();
+  // const [setsDresses, setSetsDresses] = useState();
   const [filterStyles, setFilterStyles] = useState([]);
   const [filterColor, setFilterColor] = useState();
   const [OrderBy, setOrderBy] = useState([
@@ -76,14 +76,15 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   async function getDresses() {
     
     await axios
-      .get("http://localhost:3000/dresses/getDresses")
+      .get("http://localhost:3003/dresses/getDresses")
       .then(async (res) => {
         setDresses(res.data);
         setTempDresses(res.data);
-        await axios
-          .get("http://localhost:3000/areas/getareas")
+        await axios                                                             
+          .get("http://localhost:3003/areas/getareas")                  
           .then(async (areas) => {
             console.log(areas.data);
+            // מקבל את כל תתי האזורים
             let tempArr = res.data.map((d) => {
               let area = areas.data.filter((a) => d.subArea.area == a._id);
               console.log(area[0]);
@@ -119,6 +120,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
     console.log(valToChange);
     sort(valToChange);
   }
+  
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
