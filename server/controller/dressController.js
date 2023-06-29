@@ -4,7 +4,7 @@ const {DressModel, validateDress} = require('../models/dressModel')
 const getDresses = async (req, res) => {
     try {
 
-        let dresses = await DressModel.find().lean().populate('color').populate("landlord").populate("subArea").populate("images").populate("style").populate("subArea.area");
+        let dresses = await DressModel.find().lean().populate('color').populate("landlord").populate("images").populate("style").populate("subArea.area");
 //   await DressModel.deleteMany({})
         //    dresses.forEach(async(dress) => {
     //    let ne  = dress
@@ -13,7 +13,8 @@ const getDresses = async (req, res) => {
     //    });
         res.send(dresses)
     } catch (error) {
-        res.json({ "eror": error })
+        console.log(error);
+        res.json({  error })
     }
 
 }

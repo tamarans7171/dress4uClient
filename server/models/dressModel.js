@@ -3,14 +3,14 @@ const Joi = require("joi");
 
 const dressSchema = new mongoose.Schema({
   description:String,
-  landlord:{type:mongoose.Schema.Types.ObjectId,ref:'user'},
+  landlord:{type:mongoose.Schema.Types.ObjectId,ref:'users'},
   price:Number,
   size:Number,
   uploadDate:Date,
   endTime:Date,
-  style:[{type:mongoose.Schema.Types.ObjectId,ref:'style'}],
-  color:{type:mongoose.Schema.Types.ObjectId,ref:'color'},
-  subArea:{type:mongoose.Schema.Types.ObjectId,ref:'subArea'},
+  style:[{type:mongoose.Schema.Types.ObjectId,ref:'styles'}],
+  color:{type:mongoose.Schema.Types.ObjectId,ref:'colors'},
+  subArea:{type:mongoose.Schema.Types.ObjectId,ref:'subAreas'},
   images:{type:mongoose.Schema.Types.ObjectId,ref:'images'},
   viewCounter:Number,
   status:Number
