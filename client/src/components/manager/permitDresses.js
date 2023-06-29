@@ -65,7 +65,7 @@ function PermitDresses() {
   }, []);
 
   async function getDressesToPremit() {
-    await axios.get("http://localhost:3030/dress/getDresses").then((res) => {
+    await axios.get("http://localhost:3003/dresses/getDresses").then((res) => {
       let DressesToPermit = res.data.filter((dress) => dress.status == 0);
       setDresses(DressesToPermit);
       console.log(DressesToPermit);

@@ -29,9 +29,9 @@ const getDressById = async (req, res) => {
 
 }
 const getDressByUserId = async (req, res) => {
-
     try {
         let userId = req.params.userId
+        console.log(userId);
         let dresses = await DressModel.find({landlord:userId}).lean().populate('color').populate("landlord").populate("subArea").populate("images");
         res.send(dresses)
     } catch (error) {
@@ -65,7 +65,7 @@ const addDress = async (req, res) => {
         subArea: req.body.subArea,
         images: req.body.images
     }
-        let newDress = new dressModel(obj)
+        let newDress = new DressModel(obj)
 
         await newDress.save().then((s)=>{
          console.log(s);

@@ -35,7 +35,7 @@ const deleteStyle = async (req, res) => {
 }
 const addStyle = async (req, res) => {
     try {
-        let newStyle = new styleModel(req.body)
+        let newStyle = new StyleModel(req.body)
 
         await newStyle.save()
         res.send("the new style added successfully!")

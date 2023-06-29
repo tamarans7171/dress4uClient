@@ -41,7 +41,6 @@ router.post('/upload-images', upload.array('imgCollection', 6), (req, res, next)
         reqFiles.push({url:url + '/public/' + req.files[i].filename, isPermited:0})
     }
     const images = new Images({
-        _id: new mongoose.Types.ObjectId(),
         imgCollection: reqFiles
     });
     images.save().then(result => {

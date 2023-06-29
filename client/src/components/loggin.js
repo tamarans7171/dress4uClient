@@ -20,6 +20,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+
 function mapStateToProps(state) {
   console.log(state);
   return {
@@ -27,6 +28,7 @@ function mapStateToProps(state) {
     dress: state.Dress.dress,
   };
 }
+
 export default connect(mapStateToProps)(function Loggin(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -43,9 +45,10 @@ export default connect(mapStateToProps)(function Loggin(props) {
     password: "",
     firstName: "",
     lastName: "",
-    address: {city:"PT", street:"DR", numHouse:27},
+    address: { city: "", street: "", numHouse: 0 },
     phone: "",
   });
+  
   const [displayMes, setdisplayMes] = useState({
     firstName: "none",
     lastName: "none",
@@ -89,6 +92,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
       });
     }
   };
+
   const handleCloseLoggin = (event, reason) => {
     console.log(state);
     setOpenAlertLoggin(false);
@@ -114,10 +118,9 @@ export default connect(mapStateToProps)(function Loggin(props) {
     }
   };
 
-  console.log(dress);
   async function tryLogUser() {
     if (logUser.email == "" || logUser.password == "")
-      alert("you have to feel all the areas!!!");
+      alert("עליך למלא את כל הפרטים");
     else {
       let userLogin = {
         email: logUser.email,
@@ -166,12 +169,15 @@ export default connect(mapStateToProps)(function Loggin(props) {
   }
 
   async function signUp() {
+    console.log(signUpUser);
     if (
       signUpUser.email == "" ||
       signUpUser.password == "" ||
       signUpUser.firstName == "" ||
       signUpUser.lastName == "" ||
-      signUpUser.address == "" ||
+      signUpUser.address.city == "" ||
+      signUpUser.address.street == "" ||
+      signUpUser.address.numHouse == 0 ||
       signUpUser.phone == ""
     )
       alert("עליך למלא את כל השדות!!!");
@@ -238,12 +244,27 @@ export default connect(mapStateToProps)(function Loggin(props) {
           />
           <input
             className="inputLogin"
-            onChange={(e) =>
-              setSignUpUser({ ...signUpUser, address: e.target.value })
-            }
+            onChange={(e) => signUpUser.address.city = e.target.value}
+
             type="text"
             name="txt"
-            placeholder="כתובת"
+            placeholder="עיר"
+            required=""
+          />
+          <input
+            className="inputLogin"
+            onChange={(e) => signUpUser.address.street = e.target.value}
+            type="text"
+            name="txt"
+            placeholder="רחוב"
+            required=""
+          />
+          <input
+            className="inputLogin"
+            onChange={(e) => signUpUser.address.numHouse = e.target.value}
+            type="number"
+            name="number"
+            placeholder="מספר בית"
             required=""
           />
           <input
@@ -254,7 +275,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
             }}
             type="email"
             name="email"
-            placeholder="כתוהבת מייל"
+            placeholder="כתובת מייל"
             required=""
           />
           <p
@@ -304,8 +325,8 @@ export default connect(mapStateToProps)(function Loggin(props) {
             {state && state.endDate != null
               ? "הרשם וצור מנוי"
               : dress == undefined || dress.color == undefined
-              ? "הרשם"
-              : "הרשם והעלה שמלה"}
+                ? "הרשם"
+                : "הרשם והעלה שמלה"}
           </button>
         </div>
 
@@ -335,8 +356,8 @@ export default connect(mapStateToProps)(function Loggin(props) {
             {state && state.endDate != null
               ? "התחבר וצור מנוי"
               : dress == undefined || dress.color == undefined
-              ? "התחבר"
-              : "התחבר והעלה שמלה"}
+                ? "התחבר"
+                : "התחבר והעלה שמלה"}
           </button>
         </div>
       </div>

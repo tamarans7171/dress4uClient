@@ -109,7 +109,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   // }
   async function deleteMe(id) {
     await axios
-      .delete("http://localhost:3000/dresses/deleteDress/" + id)
+      .delete("http://localhost:3003/dresses/deleteDress/" + id)
       .then((res) => {
         console.log(res.data);
       });
@@ -124,7 +124,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
-      .put("http://localhost:3000/dresses/updateDress/" + dress._id, dress)
+      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
       .then((ans) => {
         console.log(ans.data);
       });
@@ -163,7 +163,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   }
   return (
     <div className="allDresses">
-      {/* <h1>בחר שמלה</h1> */}
+    
       {tempDresses ? (
         <div>
           <div className="container">
@@ -174,7 +174,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
             />
 
             <div className="allProductsDiv">
-              <form id="app-cover">
+              <div id="app-cover">
                 <div id="select-box">
                   <input type="checkbox" id="options-view-button" />
                   <div id="select-button" className="brd">
@@ -220,7 +220,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
                     <div id="option-bg"></div>
                   </div>
                 </div>
-              </form>
+              </div>
               {tempDresses.length > 0 ? (
                 <div style={{ marginTop: "19px" }} className="col-8">
                   <div className="container containerProducts">

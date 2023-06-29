@@ -16,7 +16,6 @@ const userSchema = new mongoose.Schema({
   startDate:Date,
   endDate:Date
 })
-console.log("LLLLLLLLLLLLL");
 
 exports.UserModel = mongoose.model("users", userSchema);
 

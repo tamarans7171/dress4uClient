@@ -55,7 +55,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
 
   async function getUserDresses() {
     await axios
-      .get("http://localhost:3030/dress/getDressByUser/" + user._id)
+      .get("http://localhost:3003/dresses/getDressByUser/" + user._id)
       .then((res) => {
         console.log(res.data);
         res.data.forEach((element) => {
@@ -136,7 +136,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
     let newImages = { imgCollection: tempImages };
     await axios
       .put(
-        "http://localhost:3030/images/updateImages/" + tempDress.images._id,
+        "http://localhost:3003/images/updateImages/" + tempDress.images._id,
         newImages
       )
       .then(async (resImages) => {
@@ -146,14 +146,14 @@ export default connect(mapStateToProps)(function MyDresses(props) {
         tempDress.endTime = dateToDress;
         await axios
           .put(
-            "http://localhost:3030/dress/updateDress/" + tempDress._id,
+            "http://localhost:3003/dresses/updateDress/" + tempDress._id,
             tempDress
           )
           .then(async (resDress) => {
             console.log(resDress.data);
             newPayment.dress = tempDress._id;
             await axios
-              .post("http://localhost:3030/payment/addPayment", newPayment)
+              .post("http://localhost:3003/payments/addPayment", newPayment)
               .then((resPay) => {
                 console.log(resPay.data);
               });
@@ -164,7 +164,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   async function deleteDress(dressIndex) {
     await axios
       .delete(
-        "http://localhost:3030/dress/deleteDress/" +
+        "http://localhost:3003/dresses/deleteDress/" +
           disPermiitionDresses[dressIndex]
       )
       .then(async (respDress) => {

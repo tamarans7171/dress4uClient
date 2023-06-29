@@ -1,4 +1,4 @@
-const {ImagesModel, validateImages} = require('../models/imagesModel');
+const {ImagesModel} = require('../models/imagesModel');
 const updateImages = async (req, res) => {
     try {
         let id = req.params.id;

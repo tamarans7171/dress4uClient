@@ -41,7 +41,7 @@ export default connect(mapStateToProps)(function Payments(props) {
     tempPayment.isLandlord = false;
     console.log(tempPayment);
     await axios
-      .post("http://localhost:3000/payments/addPayment", tempPayment)
+      .post("http://localhost:3003/payments/addPayment", tempPayment)
       .then((resPay) => {
         console.log(resPay.data);
         navigate("/allProducts");
@@ -51,13 +51,14 @@ export default connect(mapStateToProps)(function Payments(props) {
   async function saveDress() {
     // אם התשלום עבר
     axios
-      .post("http://localhost:3000/images/upload-images", images, {})
+      .post("http://localhost:3003/images/upload-images", images, {})
       .then(async (res) => {
         console.log(res.data.imagesCreated._id);
         dress.images = res.data.imagesCreated._id;
         dress.landlord = user._id;
+        console.log(dress);
         await axios
-          .post("http://localhost:3000/dresses/addDress", dress)
+          .post("http://localhost:3003/dresses/addDress", dress)
           .then(async (resp) => {
             alert(
               "יש 😊 הצלחת להעלות את השמלה לאתר, השמלה רק צריכה לעבור את אישור המנהל."
@@ -87,11 +88,11 @@ export default connect(mapStateToProps)(function Payments(props) {
       user.startDate = new Date();
     }
     await axios
-      .put("http://localhost:3000/users/updateUser/" + user._id, user)
+      .put("http://localhost:3003/users/updateUser/" + user._id, user)
       .then(async (res) => {
         console.log(res.data);
         await axios
-          .post("http://localhost:3000/payments/addPayment", tempPayment)
+          .post("http://localhost:3003/payments/addPayment", tempPayment)
           .then((resPay) => {
             console.log(resPay.data);
             navigate("/allProducts");
@@ -109,13 +110,13 @@ export default connect(mapStateToProps)(function Payments(props) {
 
     await axios
       .put(
-        "http://localhost:3000/dresses/updateDress/" + tempDress._id,
+        "http://localhost:3003/dresses/updateDress/" + tempDress._id,
         tempDress
       )
       .then(async (res) => {
         console.log(res.data);
         await axios
-          .post("http://localhost:3000/payments/addPayment", tempPayment)
+          .post("http://localhost:3003/payments/addPayment", tempPayment)
           .then((resPay) => {
             console.log(resPay.data);
             navigate("/allProducts");

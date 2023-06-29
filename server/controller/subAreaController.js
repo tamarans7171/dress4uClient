@@ -15,8 +15,8 @@ const getSubAreas=async(req,res)=>{
 const getSubAreasByArea=async(req,res)=>{
     try {
         let id=req.params.id
-
-     let subAreas=await SubAreaModel.find({area:Types.ObjectId(id)});
+     let subAreas=await SubAreaModel.find({"area":id});
+     console.log(subAreas);
      res.send(subAreas)
     } catch (error) {
         res.json({"eror":error})

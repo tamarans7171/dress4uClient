@@ -53,7 +53,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
   };
 
   useEffect(() => {
-    if (user.email == "managerdress@gmail.com") {
+    if (user.email == "rabi@gmail.com") {
       navigate("/permitDresses");
     } else {
       navigate("/allProducts");
@@ -142,7 +142,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
                 >
                   <Typography textAlign="center">שמלות</Typography>
                 </MenuItem>
-                {user._id == "6448ed451b08bcbc87b62b2f" ? (
+                {user._id == "649c1c1e565273026e9bcd2d" ? (
                   <div>
                     {" "}
                     <MenuItem
@@ -240,7 +240,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
               >
                 שמלות
               </Button>
-              {user._id == "6448ed451b08bcbc87b62b2f" ? (
+              {user._id == "649c1c1e565273026e9bcd2d" ? (
                 <>
                   <Button
                     className="navBtn"

@@ -89,14 +89,15 @@ export default connect(mapStateToProps)(function AddDress(props) {
     getSubAreas();
     console.log("ho");
   }, [areaChoosen]);
+
   async function getStyles() {
-    await axios.get("http://localhost:3030/style/getStyles").then((res) => {
+    await axios.get("http://localhost:3003/styles/getStyles").then((res) => {
       setStyles(res.data);
     });
   }
 
   async function getAreas() {
-    await axios.get("http://localhost:3030/area/getAreas").then((res) => {
+    await axios.get("http://localhost:3003/areas/getAreas").then((res) => {
       setAreas(res.data);
     });
   }
@@ -104,14 +105,15 @@ export default connect(mapStateToProps)(function AddDress(props) {
   async function getSubAreas() {
     if (areaChoosen)
       await axios
-        .get("http://localhost:3030/subArea/getSubAreasByArea/" + areaChoosen)
+        .get("http://localhost:3003/subAreas/getSubAreasByArea/" + areaChoosen)
         .then((res) => {
+          console.log(res.data);
           setSubAreas(res.data);
         });
   }
 
   async function getColors() {
-    await axios.get("http://localhost:3030/color/getColors").then((res) => {
+    await axios.get("http://localhost:3003/colors/getColors").then((res) => {
       let temp = {};
       console.log(res.data);
       res.data.forEach((t) => {
