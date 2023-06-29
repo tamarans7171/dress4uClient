@@ -33,7 +33,7 @@ const getDressByUserId = async (req, res) => {
     try {
         let userId = req.params.userId
         console.log(userId);
-        let dresses = await DressModel.find({landlord:userId}).lean().populate('color').populate("landlord").populate("subArea").populate("images");
+        let dresses = await DressModel.find({landlord:userId}).lean().populate('color').populate("landlord").populate("images");
         res.send(dresses)
     } catch (error) {
         res.json({ "error": error })
@@ -52,29 +52,34 @@ const deleteDress = async (req, res) => {
 
 }
 const addDress = async (req, res) => {
-    try {
         console.log(req.body);
         
-    var obj = {
-        description: req.body.description,
-        landlord: req.body.landlord,
-        price: req.body.price,
-        size: req.body.size,
-        style:req.body.style,
-        uploadDate: req.body.uploadDate,
-        color: req.body.color,
-        subArea: req.body.subArea,
-        images: req.body.images
-    }
-        let newDress = new DressModel(obj)
-
-        await newDress.save().then((s)=>{
-         console.log(s);
-            res.send(s)
-        })
-    } catch (error) {
-        res.json({ "error": error })
-    }
+    // var obj = {
+    //     description: req.body.description,
+    //     landlord: req.body.landlord,
+    //     price: req.body.price,
+    //     size: req.body.size,
+    //     style:req.body.style,
+    //     uploadDate: req.body.uploadDate,
+    //     color: req.body.color,
+    //     subArea: req.body.subArea,
+    //     images: req.body.images
+    // }
+    //     let newDress = new DressModel(obj)
+        let validBody = validateDress(req.body);
+        if (validBody.error) {
+          return res.status(400).json(validBody.error.details);
+        }
+        try {
+          let dress = new DressModel(req.body);
+          await dress.save();
+          res.status(201).json(dress);
+        } catch (err) {
+          
+          console.log(err);
+          res.status(500).json({ err: "err", err })
+       
+        }
 
 }
 const updateDress = async (req, res) => {
