@@ -68,6 +68,7 @@ const addDress = async (req, res) => {
     //     let newDress = new DressModel(obj)
         let validBody = validateDress(req.body);
         if (validBody.error) {
+            console.log(validBody.error.details);
           return res.status(400).json(validBody.error.details);
         }
         try {

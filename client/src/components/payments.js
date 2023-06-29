@@ -57,7 +57,8 @@ export default connect(mapStateToProps)(function Payments(props) {
         dress.images = res.data.imagesCreated._id;
         dress.landlord = user._id;
         console.log(dress);
-        await axios
+        try {
+          await axios
           .post("http://localhost:3003/dresses/addDress", dress)
           .then(async (resp) => {
             alert(
@@ -77,6 +78,11 @@ export default connect(mapStateToProps)(function Payments(props) {
 
             navigate("/allProducts");
           });
+        } catch (error) {
+          console.log(error);
+         
+        }
+        
       });
   }
 

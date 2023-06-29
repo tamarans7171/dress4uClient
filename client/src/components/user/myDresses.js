@@ -171,7 +171,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
         console.log(respDress.data);
         await axios
           .delete(
-            "http://localhost:3030/images/deleteImages/" +
+            "http://localhost:3003/images/deleteImages/" +
               disPermiitionDresses[dressIndex].images._id
           )
           .then((respImages) => {
@@ -232,6 +232,7 @@ let tempDress = dressesInAdd[index]
             <div className="container containerProducts">
               <div className="row">
                 {dressesInAdd.map((dress, i) => {
+                  console.log(dress.images.imgCollection[0].url)
                   if (dress.dressSet == "" || dress.dressSet == undefined)
                     return (
                       <Link
@@ -491,6 +492,8 @@ let tempDress = dressesInAdd[index]
             <div className="container containerProducts">
               <div className="row">
                 {waitingDresses.map((dress, i) => {
+                                    console.log(dress.images.imgCollection[0].url)
+
                   if (dress.dressSet == "" || dress.dressSet == undefined)
                     return (
                       <Link
