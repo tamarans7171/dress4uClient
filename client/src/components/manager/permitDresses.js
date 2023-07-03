@@ -128,8 +128,10 @@ function PermitDresses() {
               setDresses([])
               if(d==1) {
                 let newPayment = {  user:dress.landlord, amount:30, date:new Date(),isLandlord:true, dress:dress._id}
+                console.log(newPayment);
                 await axios.post("http://localhost:3003/payments/addPayment", newPayment).then((resPay)=>{
                   console.log(resPay.data);
+                  console.log("prmit 132");
                 })
               }
               

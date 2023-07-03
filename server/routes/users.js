@@ -61,6 +61,7 @@ router.delete("/:idDel",async(req,res) => {
 router.put("/:idEdit",async(req,res) => {
   let validBody = validateUser(req.body);
   if(validBody.error){
+    console.log(req.body);
     return res.status(400).json(validBody.error.details);
   }
   try{

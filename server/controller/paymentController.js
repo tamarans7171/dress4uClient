@@ -63,7 +63,7 @@ const deletePayment=async(req,res)=>{
 }
 const addPayment=async(req,res)=>{
     try {
-        let newPayment=new paymentModel(req.body) 
+        let newPayment=new PaymentModel(req.body) 
 console.log(newPayment);
         await newPayment.save()
         res.send("the new Payment added successfully!")

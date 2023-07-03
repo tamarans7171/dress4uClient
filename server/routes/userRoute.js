@@ -6,7 +6,7 @@ const {authToken, authAdmin} = require("../auth/authToken")
 router.get('/getUsers',userController.getUsers),
 router.get('/getUserById/:id',userController.getUserById),
 router.post('/login',userController.login),
-router.put('/updateUser/:id',authAdmin,userController.updateUser),
+router.put('/updateUser/:id',userController.updateUser),
 router.delete('/deleteUser/:id',userController.deleteUser),
 router.post('/addUser',userController.addUser),
 router.get('/userInfo',authToken,userController.getUserInfo),

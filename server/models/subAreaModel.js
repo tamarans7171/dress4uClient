@@ -6,7 +6,7 @@ const subareaSchema = new mongoose.Schema({
   area:{type:mongoose.Schema.Types.ObjectId,ref:'area'}
 })
 
-exports.SubAreaModel = mongoose.model("subareas", subareaSchema);
+exports.SubAreaModel = mongoose.model("subAreas", subareaSchema);
 
 exports.validateSubArea = (_reqBody) => {
   let joiSchema = Joi.object({

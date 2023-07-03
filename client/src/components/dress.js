@@ -58,6 +58,7 @@ export default connect(mapStateToProps)(function Dress(props) {
     checkPermitionComment();
     checkPerferenc();
     checkPermitionNumber();
+    console.log(dress);
   }, []);
 
   const handleClick = () => {
@@ -166,7 +167,7 @@ export default connect(mapStateToProps)(function Dress(props) {
           date: new Date(),
         };
         await axios
-          .post("http://localhost:3003/perference/addPerference", newPerference)
+          .post("http://localhost:3003/perferences/addPerference", newPerference)
           .then((res) => {
             console.log(res.data);
           });

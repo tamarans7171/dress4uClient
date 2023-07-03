@@ -101,6 +101,7 @@ export default connect(mapStateToProps)(function Payments(props) {
           .post("http://localhost:3003/payments/addPayment", tempPayment)
           .then((resPay) => {
             console.log(resPay.data);
+            console.log("103 payments");
             navigate("/allProducts");
           });
       });
