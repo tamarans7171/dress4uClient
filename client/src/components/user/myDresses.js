@@ -224,7 +224,7 @@ let tempDress = dressesInAdd[index]
   return (
     <div>
       <div className="typeDressesContainer">
-        <h2 class="divider line double-razor" contenteditable>
+        <h2 className="divider line double-razor" contenteditable>
           שמלות המתפרסמות על ידך באתר
         </h2>
         {dressesInAdd.length > 0 ? (
@@ -350,7 +350,7 @@ let tempDress = dressesInAdd[index]
         </Modal>
       </div>
       <div className="typeDressesContainer">
-        <h2 class="divider line double-razor" contenteditable>
+        <h2 className="divider line double-razor" contenteditable>
           שמלות שלא אושרו
         </h2>
         {disPermiitionDresses.length > 0 ? (
@@ -459,6 +459,7 @@ let tempDress = dressesInAdd[index]
                   }}
                   onClick={() => {
                     deleteDress(selectedIndexDisPermitionDress);
+                    handleClose()
                   }}
                   variant="outlined"
                   color={"error"}
@@ -470,6 +471,8 @@ let tempDress = dressesInAdd[index]
                   style={{ paddingLeft: "25px", marginTop: "25px" }}
                   onClick={() => {
                     uploadDress(selectedIndexDisPermitionDress);
+                    handleClose()
+
                   }}
                   variant="outlined"
                   color={"success"}
@@ -484,7 +487,7 @@ let tempDress = dressesInAdd[index]
       </Modal>
 
       <div className="typeDressesContainer">
-        <h2 class="divider line double-razor" contenteditable>
+        <h2 className="divider line double-razor" contenteditable>
           שמלות בהמתנה לאישור המנהל
         </h2>
         {waitingDresses.length > 0 ? (
@@ -499,7 +502,7 @@ let tempDress = dressesInAdd[index]
                       <Link
                         key={i}
                         style={{ color: "#b74160" }}
-                        to="/dress"
+                        // to="/dress"
                         state={dress}
                       >
                         {" "}

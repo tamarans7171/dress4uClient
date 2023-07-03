@@ -48,36 +48,6 @@ export default connect(mapStateToProps)(function AddDress(props) {
   const [colorsDictionary, setColorsDictionary] = useState({});
   const [image, setImage] = useState([]);
 
-  // const myStyles = reactCSS({
-  //   'default': {
-  //     color: {
-  //       width: '36px',
-  //       height: '14px',
-  //       borderRadius: '2px',
-  //       background: `rgba(${ this.state.color.r }, ${ this.state.color.g }, ${ this.state.color.b }, ${ this.state.color.a })`,
-  //     },
-  //     swatch: {
-  //       padding: '5px',
-  //       background: '#fff',
-  //       borderRadius: '1px',
-  //       boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
-  //       display: 'inline-block',
-  //       cursor: 'pointer',
-  //     },
-  //     popover: {
-  //       position: 'absolute',
-  //       zIndex: '2',
-  //     },
-  //     cover: {
-  //       position: 'fixed',
-  //       top: '0px',
-  //       right: '0px',
-  //       bottom: '0px',
-  //       left: '0px',
-  //     },
-  //   },
-  // });
-
   useEffect(() => {
     getStyles();
     getColors();
@@ -208,6 +178,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
     setNewDress({ ...newDress, color: colorsDictionary[color.hex] });
     // console.log(state);
   }
+
   const InputOption = ({
     getStyles,
     Icon,
@@ -284,6 +255,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
       minHeight: "30px",
     }),
   };
+  
   function addDressToSet() {
     let temp = newDress;
     temp.style = selectedOptions;
@@ -387,7 +359,6 @@ export default connect(mapStateToProps)(function AddDress(props) {
                   className="input__fieldAdd"
                   defaultValue={[]}
                   isMulti
-                  // value={selectedOptions.map(s=>s.value)}
                   styles={customStyles}
                   closeMenuOnSelect={false}
                   hideSelectedOptions={false}

@@ -83,6 +83,7 @@ export default connect(mapStateToProps)(function Dress(props) {
   };
 
   async function getComments() {
+    console.log(dress._id+" 😁");
     await axios
       .get(
         "http://localhost:3003/comments/getCommentByDressId/" + dress._id,

@@ -21,7 +21,7 @@ exports.DressModel = mongoose.model("dresses", dressSchema);
 
 exports.validateDress = (_reqBody) => {
   let joiSchema = Joi.object({
-    description: Joi.string().min(5).max(30).required(),
+    description: Joi.string().min(1).max(30).required(),
     landlord: Joi.string().min(7).max(40).required(),
     price: Joi.string().min(0).required(),
     size: Joi.number().min(1).max(60).required(),

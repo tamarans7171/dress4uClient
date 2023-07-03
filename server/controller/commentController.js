@@ -1,5 +1,5 @@
 const {CommentModel, validateComment}=require('../models/commentModel')
-const {Types}=require('mongoose')
+const { login } = require('./userController');
 
 
 const getComments=async(req,res)=>{
@@ -17,8 +17,10 @@ const getCommentById=async(req,res)=>{
     try {
         let id=req.params.id
      let comment= await CommentModel.findById(id);
+     console.log(comment);
      res.send(comment)
     } catch (error) {
+        console.log(error);
         res.json({"error":error})
     }
 
@@ -27,7 +29,7 @@ const getCommentByDressId=async(req,res)=>{
 
     try {
         let id=req.params.id
-     let comments= await CommentModel.find({dress:Types.ObjectId(id)});
+     let comments= await CommentModel.find({dress:id});
      res.send(comments)
     } catch (error) {
         res.json({"error":error})

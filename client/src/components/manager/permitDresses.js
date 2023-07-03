@@ -112,14 +112,14 @@ function PermitDresses() {
       }
       await axios
         .put(
-          "http://localhost:3030/dress/updateDress/" +
+          "http://localhost:3003/dresses/updateDress/" +
             tempDresses[dressIndex]._id,
           tempDresses[dressIndex]
         )
         .then(async (ans) => {
           await axios
             .put(
-              "http://localhost:3030/images/updateImages/" + dress.images._id,
+              "http://localhost:3003/images/updateImages/" + dress.images._id,
               dress.images
             )
             .then(async(resImages) => {
@@ -128,7 +128,7 @@ function PermitDresses() {
               setDresses([])
               if(d==1) {
                 let newPayment = {  user:dress.landlord, amount:30, date:new Date(),isLandlord:true, dress:dress._id}
-                await axios.post("http://localhost:3030/payment/addPayment", newPayment).then((resPay)=>{
+                await axios.post("http://localhost:3003/payments/addPayment", newPayment).then((resPay)=>{
                   console.log(resPay.data);
                 })
               }

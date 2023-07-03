@@ -65,6 +65,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
   const handleClickSignUp = () => {
     setOpenAlertSignUp(true);
   };
+  
   const handleClickLogin = () => {
     setOpenAlertLoggin(true);
   };
@@ -219,7 +220,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
         />
 
         <div className="signup">
-          <label className="labelLogin" htmlFor="chk" aria-hidden="true">
+          <label className="labelSignUp" htmlFor="chk" aria-hidden="true">
             הרשמה
           </label>
           <input
@@ -279,7 +280,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
             required=""
           />
           <p
-            className="emEr"
+            className="emEr erro"
             style={{ color: "red", display: displayMes.email }}
           >
             כתובת המייל אינה תקינה
@@ -298,7 +299,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
           />
           {/* {!seePassword?<RemoveRedEyeIcon onClick={()=>{setSeePassword(!seePassword)}} className='eye'/>:<VisibilityOffIcon onClick={()=>{setSeePassword(!seePassword)}} className='eye'/>} */}
           <span
-            className="pasEr"
+            className="pasEr erro"
             style={{ display: displayMes.password, color: "red" }}
           >
             הסיסמא צריכה להכיל לפחות 6 תוים
@@ -315,7 +316,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
             required=""
           />
           <p
-            className="phnEr"
+            className="phnEr erro"
             style={{ color: "red", display: displayMes.phone }}
           >
             מספר הטלפון אינו תקין!
