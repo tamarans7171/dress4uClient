@@ -20,9 +20,12 @@ function Users() {
 
 
     async function getUsers() {
-            await axios.get("http://localhost:3030/user/getUsers").then((resp) =>{
-                setUsers(resp.data)
-                console.log(resp.data);
+            await axios.get("http://localhost:3003/users/getUsers").then((resp) =>{
+            let usersTemp = resp.data.map((user=>{
+              return {...user, address: user.address.street + " " + user.address.numHouse + " " + user.address.city}
+            }))    
+            setUsers(usersTemp)
+                console.log(usersTemp);
             })
     }
 
@@ -52,7 +55,7 @@ function Users() {
         numeric: true,
       },
       {
-        width: 120,
+        width: 190,
         label: 'מייל',
         dataKey: 'email',
         numeric: true,

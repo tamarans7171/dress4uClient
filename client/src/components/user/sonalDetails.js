@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import Fab from '@mui/material/Fab';
 import DoneOutline from '@mui/icons-material/DoneOutline';
 import { useState } from 'react';
+import axios from 'axios'
 function mapStateToProps(state) {
     console.log(state);
     return {
@@ -16,8 +17,26 @@ function mapStateToProps(state) {
   export default connect(mapStateToProps)(function SonalDetails(props) {
     const [user, setUser] = useState(props.user)
   function updateDetails() {
-    
+    let tempUser = user
+    let address = user.address.split(" ")
+    let ans = address.findIndex((a) =>{
+      return isNum(a)
+    })
+    for (let i = 0; i < ans; i++) {
+      tempUser.address.street += address[i]+" "
+    }
+    tempUser.address.street = tempUser.address.street.trim()
+    tempUser.address.numHouse = Number(address[ans])
+    for (let i = ans + 1; i < address.length; i++) {
+      tempUser.address.city += address[i]+" "
+    }
+    tempUser.address.city = tempUser.address.city.trim()
+// await axios.patch()
   }
+
+  function isNum(v) {
+    return /\d/.test(v);
+}
     return (
     <div className='details'>
     <div className="cardDetails card--accentDetails">

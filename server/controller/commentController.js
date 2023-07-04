@@ -49,7 +49,7 @@ const deleteComment=async(req,res)=>{
 }
 const addComment=async(req,res)=>{
     try {
-        let newComment=new commentModel(req.body) 
+        let newComment=new CommentModel(req.body) 
 
         await newComment.save()
         res.send("the new Comment added successfully!")
