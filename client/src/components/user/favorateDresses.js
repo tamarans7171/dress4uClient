@@ -55,7 +55,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
-      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
+      .put("https://dress4u.onrender.com/dresses/updateDress/" + dress._id, dress)
       .then((ans) => {
         console.log(ans.data);
       });

@@ -20,7 +20,7 @@ function Users() {
 
 
     async function getUsers() {
-            await axios.get("http://localhost:3003/users/getUsers").then((resp) =>{
+            await axios.get("https://dress4u.onrender.com/users/getUsers").then((resp) =>{
             let usersTemp = resp.data.map((user=>{
               return {...user, address: user.address.street + " " + user.address.numHouse + " " + user.address.city}
             }))    

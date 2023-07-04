@@ -77,12 +77,12 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   async function getDresses() {
     
     await axios
-      .get("http://localhost:3003/dresses/getDresses")
+      .get("https://dress4u.onrender.com/dresses/getDresses")
       .then(async (res) => {
         setDresses(res.data);
         setTempDresses(res.data);
         await axios                                                             
-          .get("http://localhost:3003/areas/getareas")                  
+          .get("https://dress4u.onrender.com/areas/getareas")                  
           .then(async (areas) => {
             console.log(areas.data);
             // מקבל את כל תתי האזורים
@@ -110,7 +110,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   // }
   async function deleteMe(id) {
     await axios
-      .delete("http://localhost:3003/dresses/deleteDress/" + id)
+      .delete("https://dress4u.onrender.com/dresses/deleteDress/" + id)
       .then((res) => {
         console.log(res.data);
       });
@@ -125,7 +125,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
-      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
+      .put("https://dress4u.onrender.com/dresses/updateDress/" + dress._id, dress)
       .then((ans) => {
         console.log(ans.data);
       });

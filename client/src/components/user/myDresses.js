@@ -55,7 +55,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
 
   async function getUserDresses() {
     await axios
-      .get("http://localhost:3003/dresses/getDressByUser/" + user._id)
+      .get("https://dress4u.onrender.com/dresses/getDressByUser/" + user._id)
       .then((res) => {
         console.log(res.data);
         res.data.forEach((element) => {
@@ -136,7 +136,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
     let newImages = { imgCollection: tempImages };
     await axios
       .put(
-        "http://localhost:3003/images/updateImages/" + tempDress.images._id,
+        "https://dress4u.onrender.com/images/updateImages/" + tempDress.images._id,
         newImages
       )
       .then(async (resImages) => {
@@ -146,14 +146,14 @@ export default connect(mapStateToProps)(function MyDresses(props) {
         tempDress.endTime = dateToDress;
         await axios
           .put(
-            "http://localhost:3003/dresses/updateDress/" + tempDress._id,
+            "https://dress4u.onrender.com/dresses/updateDress/" + tempDress._id,
             tempDress
           )
           .then(async (resDress) => {
             console.log(resDress.data);
             newPayment.dress = tempDress._id;
             await axios
-              .post("http://localhost:3003/payments/addPayment", newPayment)
+              .post("https://dress4u.onrender.com/payments/addPayment", newPayment)
               .then((resPay) => {
                 console.log(resPay.data);
               });
@@ -164,14 +164,14 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   async function deleteDress(dressIndex) {
     await axios
       .delete(
-        "http://localhost:3003/dresses/deleteDress/" +
+        "https://dress4u.onrender.com/dresses/deleteDress/" +
           disPermiitionDresses[dressIndex]
       )
       .then(async (respDress) => {
         console.log(respDress.data);
         await axios
           .delete(
-            "http://localhost:3003/images/deleteImages/" +
+            "https://dress4u.onrender.com/images/deleteImages/" +
               disPermiitionDresses[dressIndex].images._id
           )
           .then((respImages) => {

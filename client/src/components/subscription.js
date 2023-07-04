@@ -108,7 +108,7 @@ export default connect(mapStateToProps)(function Subscription(props) {
     });
 
     await axios
-      .put("http://localhost:3003/user/updateUser/" + user._id, user)
+      .put("https://dress4u.onrender.com/user/updateUser/" + user._id, user)
       .then((res) => {
         console.log(res.data);
         dispatch({ type: "UPDATEUSER", payload: user });

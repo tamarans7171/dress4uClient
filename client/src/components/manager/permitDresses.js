@@ -65,7 +65,7 @@ function PermitDresses() {
   }, []);
 
   async function getDressesToPremit() {
-    await axios.get("http://localhost:3003/dresses/getDresses").then((res) => {
+    await axios.get("https://dress4u.onrender.com/dresses/getDresses").then((res) => {
       let DressesToPermit = res.data.filter((dress) => dress.status == 0);
       setDresses(DressesToPermit);
       console.log(DressesToPermit);
@@ -112,14 +112,14 @@ function PermitDresses() {
       }
       await axios
         .put(
-          "http://localhost:3003/dresses/updateDress/" +
+          "https://dress4u.onrender.com/dresses/updateDress/" +
             tempDresses[dressIndex]._id,
           tempDresses[dressIndex]
         )
         .then(async (ans) => {
           await axios
             .put(
-              "http://localhost:3003/images/updateImages/" + dress.images._id,
+              "https://dress4u.onrender.com/images/updateImages/" + dress.images._id,
               dress.images
             )
             .then(async(resImages) => {
@@ -129,7 +129,7 @@ function PermitDresses() {
               if(d==1) {
                 let newPayment = {  user:dress.landlord, amount:30, date:new Date(),isLandlord:true, dress:dress._id}
                 console.log(newPayment);
-                await axios.post("http://localhost:3003/payments/addPayment", newPayment).then((resPay)=>{
+                await axios.post("https://dress4u.onrender.com/payments/addPayment", newPayment).then((resPay)=>{
                   console.log(resPay.data);
                   console.log("prmit 132");
                 })
