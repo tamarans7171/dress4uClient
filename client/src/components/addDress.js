@@ -61,13 +61,13 @@ export default connect(mapStateToProps)(function AddDress(props) {
   }, [areaChoosen]);
 
   async function getStyles() {
-    await axios.get("https://dress4u.onrender.com/styles/getStyles").then((res) => {
+    await axios.get("http://localhost:3003/styles/getStyles").then((res) => {
       setStyles(res.data);
     });
   }
 
   async function getAreas() {
-    await axios.get("https://dress4u.onrender.com/areas/getAreas").then((res) => {
+    await axios.get("http://localhost:3003/areas/getAreas").then((res) => {
       setAreas(res.data);
     });
   }
@@ -75,7 +75,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
   async function getSubAreas() {
     if (areaChoosen)
       await axios
-        .get("https://dress4u.onrender.com/subAreas/getSubAreasByArea/" + areaChoosen)
+        .get("http://localhost:3003/subAreas/getSubAreasByArea/" + areaChoosen)
         .then((res) => {
           console.log(res.data);
           setSubAreas(res.data);
@@ -83,7 +83,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
   }
 
   async function getColors() {
-    await axios.get("https://dress4u.onrender.com/colors/getColors").then((res) => {
+    await axios.get("http://localhost:3003/colors/getColors").then((res) => {
       let temp = {};
       console.log(res.data);
       res.data.forEach((t) => {

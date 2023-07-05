@@ -4,7 +4,7 @@ function Footer() {
   return (
     <div className='footer'>
       <hr/>
-      <p>כל הזכויות שמורות לאלישבע & תמר @</p>
+      <p>© כל הזכויות שמורות לאלישבע & תמר </p>
     </div>
   )
 }

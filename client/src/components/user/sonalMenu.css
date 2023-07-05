@@ -6,6 +6,8 @@
 }
 .contentSonal{
     width: 80%;
+    min-height: 100vh;
+
 }
 .sideBar {
     /* overflow-x: hidden; */

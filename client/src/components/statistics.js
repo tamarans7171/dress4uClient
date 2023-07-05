@@ -98,7 +98,7 @@ function Statistics() {
 
     }, [])
     async function getPayments() {
-        await axios.get("https://dress4u.onrender.com/payments/getPayments").then((resPay)=>{
+        await axios.get("http://localhost:3003/payments/getPayments").then((resPay)=>{
             setPayments(resPay.data)
             console.log(resPay.data);
             let ansAVGSubscriptions = resPay.data.reduce((a, b)=>{
@@ -110,7 +110,7 @@ function Statistics() {
     }
 
     async function getDresses() {
-        await axios.get("https://dress4u.onrender.com/dresses/getDresses").then(async(res)=>{
+        await axios.get("http://localhost:3003/dresses/getDresses").then(async(res)=>{
             let now = new Date()
             let relevantDresses = res.data.filter((d)=>d.endTime > now
             // && d.status ==1
@@ -118,7 +118,7 @@ function Statistics() {
             setDresses(relevantDresses)
             console.log(res.data);
             let cnt = 0
-            await axios.get("https://dress4u.onrender.com/styles/getStyles").then((resStyles)=>{
+            await axios.get("http://localhost:3003/styles/getStyles").then((resStyles)=>{
             let tempPercentsStyles = resStyles.data.map((style =>{
               let cntTemp = 0;
               for(var i = 0; i < res.data.length; i++) {

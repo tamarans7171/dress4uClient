@@ -32,6 +32,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   const [selectedIndexDisPermitionDress, setSelectedIndexDisPermitionDress] = useState(-1);
   const [selectedIndexDressInAdd, setSelectedIndexDressInAdd] = useState(-1);
   const [endTimeDress, setEndTimeDress] = useState()
+  const [finished, setFinished] = useState(false)
   const [cntMonthes, setCntMonthes] = useState(0)
   const [newPayment, setNewPayment] = useState({
     user: user._id,
@@ -55,7 +56,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
 
   async function getUserDresses() {
     await axios
-      .get("https://dress4u.onrender.com/dresses/getDressByUser/" + user._id)
+      .get("http://localhost:3003/dresses/getDressByUser/" + user._id)
       .then((res) => {
         console.log(res.data);
         res.data.forEach((element) => {
@@ -78,6 +79,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
           }
         });
       });
+      setFinished(true)
   }
 
   const style = {
@@ -136,7 +138,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
     let newImages = { imgCollection: tempImages };
     await axios
       .put(
-        "https://dress4u.onrender.com/images/updateImages/" + tempDress.images._id,
+        "http://localhost:3003/images/updateImages/" + tempDress.images._id,
         newImages
       )
       .then(async (resImages) => {
@@ -146,14 +148,14 @@ export default connect(mapStateToProps)(function MyDresses(props) {
         tempDress.endTime = dateToDress;
         await axios
           .put(
-            "https://dress4u.onrender.com/dresses/updateDress/" + tempDress._id,
+            "http://localhost:3003/dresses/updateDress/" + tempDress._id,
             tempDress
           )
           .then(async (resDress) => {
             console.log(resDress.data);
             newPayment.dress = tempDress._id;
             await axios
-              .post("https://dress4u.onrender.com/payments/addPayment", newPayment)
+              .post("http://localhost:3003/payments/addPayment", newPayment)
               .then((resPay) => {
                 console.log(resPay.data);
               });
@@ -164,14 +166,14 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   async function deleteDress(dressIndex) {
     await axios
       .delete(
-        "https://dress4u.onrender.com/dresses/deleteDress/" +
+        "http://localhost:3003/dresses/deleteDress/" +
           disPermiitionDresses[dressIndex]
       )
       .then(async (respDress) => {
         console.log(respDress.data);
         await axios
           .delete(
-            "https://dress4u.onrender.com/images/deleteImages/" +
+            "http://localhost:3003/images/deleteImages/" +
               disPermiitionDresses[dressIndex].images._id
           )
           .then((respImages) => {
@@ -222,7 +224,7 @@ let tempDress = dressesInAdd[index]
     }
   }
   return (
-    <div>
+    (<div>{finished&&
       <div className="typeDressesContainer">
         <h2 className="divider line double-razor" contenteditable>
           שמלות המתפרסמות על ידך באתר
@@ -276,7 +278,7 @@ let tempDress = dressesInAdd[index]
         ) : (
           <>
             <p className="messegeThereIsNotMatchDressesType">
-              אין לך שמלות בפירסום
+              {/* אין לך שמלות בפירסום */}
             </p>
           </>
         )}
@@ -348,7 +350,8 @@ let tempDress = dressesInAdd[index]
             </Typography>
           </Box>
         </Modal>
-      </div>
+      </div>}
+      {finished&&
       <div className="typeDressesContainer">
         <h2 className="divider line double-razor" contenteditable>
           שמלות שלא אושרו
@@ -401,11 +404,11 @@ let tempDress = dressesInAdd[index]
         ) : (
           <>
             <p className="messegeThereIsNotMatchDressesType">
-              אין לך שמלות שלא אושרו
+              {/* אין לך שמלות שלא אושרו */}
             </p>
           </>
         )}
-      </div>
+      </div>}
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Modal
         open={open}
@@ -485,7 +488,7 @@ let tempDress = dressesInAdd[index]
           </Typography>
         </Box>
       </Modal>
-
+      {finished&&
       <div className="typeDressesContainer">
         <h2 className="divider line double-razor" contenteditable>
           שמלות בהמתנה לאישור המנהל
@@ -539,11 +542,22 @@ let tempDress = dressesInAdd[index]
         ) : (
           <>
             <p className="messegeThereIsNotMatchDressesType">
-              אין לך שמלות בהמתנה
+              {/* אין לך שמלות בהמתנה */}
             </p>
           </>
         )}
-      </div>
-    </div>
+      </div>}
+      {!finished&&        <>
+          <div className="loader">
+            <div className="face">
+              <div className="circle"></div>
+            </div>
+            <div className="face">
+              <div className="circle"></div>
+            </div>
+          </div>
+        </>
+}
+    </div>)
   );
 });

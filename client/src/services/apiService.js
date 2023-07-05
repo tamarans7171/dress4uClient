@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "https://dress4u.onrender.com"
+export const API_URL = "http://localhost:3003"
 export const TOKEN_NAME = "MYSECRETWORD"
 
 export const doApiGet = async(_url) => {

@@ -50,7 +50,7 @@ function mapStateToProps(state) {
             <span className="input__labelDetails">שם משפחה</span>
           </label>    
           <label className="inputDetails">
-            <input value={user.address} onChange={(e) => { setUser({ ...user, address: e.target.value }) }} className="input__fieldDetails" type="text" placeholder=" " />
+            <input value={user.address.street+" "+user.address.numHouse+", "+user.address.city} onChange={(e) => { setUser({ ...user, address: e.target.value }) }} className="input__fieldDetails" type="text" placeholder=" " />
             <span className="input__labelDetails">כתובת</span>
           </label>
                <label className="inputDetails">
@@ -61,10 +61,10 @@ function mapStateToProps(state) {
             <input value={user.email} onChange={(e) => { setUser({ ...user, email: e.target.value }) }} className="input__fieldDetails" type="email" placeholder=" " />
             <span className="input__labelDetails">מייל</span>
           </label>    
-          <label className="inputDetails">
-            <input value={user.password} onChange={(e) => { setUser({ ...user, password: e.target.value }) }} className="input__fieldDetails" type="password" placeholder=" " />
+          {/* <label className="inputDetails"> */}
+            {/* <input value={user.password} onChange={(e) => { setUser({ ...user, password: e.target.value }) }} className="input__fieldDetails" type="password" placeholder=" " />
             <span className="input__labelDetails">סיסמא</span>
-          </label>    
+          </label>     */}
           <div>
           <Fab variant="extended" onClick={updateDetails} size="medium"className="addDressBtn"  color="secondary" aria-label="add">
              <DoneOutline sx={{marginLeft:"5px"}}/>

@@ -20,7 +20,7 @@ function PermitDresses() {
   const [images, setImages] = useState([]);
   const [actived, setActived] = useState([]);
   // const [newPayment, setNewPayment] = useState({  user:user._id, amount:sum, date:new Date(),isLandlord:true, dress:location.state.dressToSubscribe})
-
+const [loading, setLoading] = useState(true)
   const [openAlert, setOpenAlert] = useState(false);
   const Alert = forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -65,10 +65,11 @@ function PermitDresses() {
   }, []);
 
   async function getDressesToPremit() {
-    await axios.get("https://dress4u.onrender.com/dresses/getDresses").then((res) => {
+    await axios.get("http://localhost:3003/dresses/getDresses").then((res) => {
       let DressesToPermit = res.data.filter((dress) => dress.status == 0);
       setDresses(DressesToPermit);
       console.log(DressesToPermit);
+      setLoading(false)
     });
   }
 
@@ -112,14 +113,14 @@ function PermitDresses() {
       }
       await axios
         .put(
-          "https://dress4u.onrender.com/dresses/updateDress/" +
+          "http://localhost:3003/dresses/updateDress/" +
             tempDresses[dressIndex]._id,
           tempDresses[dressIndex]
         )
         .then(async (ans) => {
           await axios
             .put(
-              "https://dress4u.onrender.com/images/updateImages/" + dress.images._id,
+              "http://localhost:3003/images/updateImages/" + dress.images._id,
               dress.images
             )
             .then(async(resImages) => {
@@ -129,7 +130,7 @@ function PermitDresses() {
               if(d==1) {
                 let newPayment = {  user:dress.landlord, amount:30, date:new Date(),isLandlord:true, dress:dress._id}
                 console.log(newPayment);
-                await axios.post("https://dress4u.onrender.com/payments/addPayment", newPayment).then((resPay)=>{
+                await axios.post("http://localhost:3003/payments/addPayment", newPayment).then((resPay)=>{
                   console.log(resPay.data);
                   console.log("prmit 132");
                 })
@@ -203,7 +204,17 @@ function PermitDresses() {
           <DoneOutline sx={{ marginLeft: "5px" }} />
           {"עדכון פרטים"}
         </Fab>
-      </div> : (
+      </div> : loading ?         <>
+          <div className="loader">
+            <div className="face">
+              <div className="circle"></div>
+            </div>
+            <div className="face">
+              <div className="circle"></div>
+            </div>
+          </div>
+        </>
+:(
         <h2 className="meesegeNoDresses">אין תמונות הממתינות לאישור</h2>
       )}
      

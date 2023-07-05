@@ -21,32 +21,51 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
   let { user } = props;
   const [state, setState] = useState([]);
   const [dresses, setDresses] = useState([]);
+  const [favoratedresses, setFavorateDresses] = useState([]);
 
   useEffect(() => {
-    getPerfrences();
+    getDresses()
   }, []);
+  async function getDresses() {
+    
+    await axios
+    .get("http://localhost:3003/dresses/getDresses")
+    .then(async (res) => {
+        setDresses(res.data);
+        await axios                                                             
+          .get("http://localhost:3003/areas/getareas")                  
+          .then(async (areas) => {
+            console.log(areas.data);
+            // מקבל את כל תתי האזורים
+            let tempArr = res.data.map((d) => {
+              let area = areas.data.filter((a) => d.subArea.area == a._id);
+              console.log(area[0]);
+              if (area[0] != undefined) d.subArea.area = area[0];
 
-  async function getPerfrences() {
-    let url = API_URL + "/perferences/getPerferenceByUser/" + user._id;
-
-    try {
+              return d;
+            });
+            let t = tempArr.filter((d) => d.status == 1);
+            setDresses(t);
+            getPerfrences(t);
+          });
+      });
+    }
+    async function getPerfrences(dressesM) {
+      let url = API_URL + "/perferences/getPerferenceByUser/" + user._id;
+      
+      try {
       let resp = await doApiGet(url);
       
-      let perferencesTemp = await resp.data.map(async(perference)=>{
-        let url2 = API_URL + "/dresses/getDressById/"+perference.dress;
-
-        try {
-          let resp2 = await doApiGet(url2);
-          console.log( {...perference, dress:resp2.data});
-          return {...perference, dress:resp2.data}
-          
-        } catch (error) {
-          alert("סליחה, יש בעיה באתר - תחזור מאוחר יותר");
-        }
-
+      let perferencesTemp = resp.data.map((perference)=>{
+        console.log(perference);
+        console.log(dressesM);
+        let filterAns = dressesM.filter((d)=>d._id == perference.dress)
+        // console.log(filterAns);
+        if(filterAns.length && filterAns.length>0)
+        return filterAns[0]
       })
-      setDresses(perferencesTemp);
-      console.log(perferencesTemp);
+      setFavorateDresses(perferencesTemp);
+      // console.log(perferencesTemp);
     } catch (error) {
       alert("סליחה, יש בעיה באתר - תחזור מאוחר יותר");
     }
@@ -55,7 +74,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
-      .put("https://dress4u.onrender.com/dresses/updateDress/" + dress._id, dress)
+      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
       .then((ans) => {
         console.log(ans.data);
       });
@@ -63,15 +82,15 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
   return (
     <div>
       
-      {dresses ? (
-        dresses.length > 0 ? (
-          dresses.map((d, i) => {
+      {favoratedresses ? (
+        favoratedresses.length > 0 ? (
+          favoratedresses.map((d, i) => {
             return       <Link
             key={i}
             style={{ color: "#b74160" }}
-            onClick={() => addViesCounter(d.dress)}
+            onClick={() => addViesCounter(d)}
             to="/dress"
-            state={d.dress}
+            state={d}
           >
             {" "}
             <div
@@ -80,7 +99,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
             >
               <div
                 style={{
-                  backgroundImage: `url(${d.dress.images.imgCollection[0].url})`,
+                  backgroundImage: `url(${d.images.imgCollection[0].url})`,
                 }}
                 className="productUp"
               >
@@ -88,7 +107,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
               </div>
               {/* <br /> */}
               <div className="productDown">
-                <h3>{d.dress.description}</h3>
+                <h3>{d.description}</h3>
                 {/* <hr></hr> */}
                 <p
                   style={{
@@ -97,9 +116,9 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
                     fontWeight: "bold",
                   }}
                 >
-                  {d.dress.price}₪{" "}
+                  {d.price}₪{" "}
                 </p>
-                <p>מידה:{d.dress.size}</p>
+                <p>מידה:{d.size}</p>
                 {/* <CirclePicker  colors={[dress.color.name]}/> */}
                 {/* <button onClick={()=>deleteMe(dress._id)}>delete</button> */}
               </div>
