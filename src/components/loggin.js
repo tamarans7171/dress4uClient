@@ -1,7 +1,6 @@
-import { useState, useEffect, forwardRef } from "react";
 import React from "react";
-import axios from "axios";
 import "./loggin.css";
+import { useState, forwardRef } from "react";
 import {
   API_URL,
   doApiGet,
@@ -9,17 +8,8 @@ import {
   TOKEN_NAME,
 } from "../services/apiService";
 import { useNavigate, useLocation } from "react-router-dom";
-import Box from "@mui/material/Box";
-import Alert from "@mui/material/Alert";
-import IconButton from "@mui/material/IconButton";
-import Collapse from "@mui/material/Collapse";
-import Button from "@mui/material/Button";
-import CloseIcon from "@mui/icons-material/Close";
 import { connect, useDispatch } from "react-redux";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import { Snackbar, Alert as MuiAlert } from "@mui/material";
 
 function mapStateToProps(state) {
   console.log(state);
@@ -36,7 +26,6 @@ export default connect(mapStateToProps)(function Loggin(props) {
   const state = location.state;
   const [seePassword, setSeePassword] = useState(false);
   const { dress } = props;
-  let { user } = props;
   // const [openLog, setOpenLog] = React.useState(false);
   // const [openSignUp, setOpenSignUp] = React.useState(false);
   const [logUser, setlogUser] = useState({ email: "", password: "" });
@@ -48,7 +37,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
     address: { city: "", street: "", numHouse: 0 },
     phone: "",
   });
-  
+
   const [displayMes, setdisplayMes] = useState({
     firstName: "none",
     lastName: "none",
@@ -65,7 +54,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
   const handleClickSignUp = () => {
     setOpenAlertSignUp(true);
   };
-  
+
   const handleClickLogin = () => {
     setOpenAlertLoggin(true);
   };
@@ -85,7 +74,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
       } else {
         navigate(state.navAfter);
       }
-    } else if (dress == undefined || dress.color == undefined) {
+    } else if (dress === undefined || dress.color === undefined) {
       navigate("/allProducts");
     } else {
       navigate("/payments", {
@@ -108,7 +97,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
         console.log("hiiii97");
         navigate(state.navAfter);
       }
-    } else if (dress == undefined || dress.color == undefined) {
+    } else if (dress === undefined || dress.color === undefined) {
       console.log("hiiii99");
       navigate("/allProducts");
     } else {
@@ -120,7 +109,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
   };
 
   async function tryLogUser() {
-    if (logUser.email == "" || logUser.password == "")
+    if (logUser.email === "" || logUser.password === "")
       alert("עליך למלא את כל הפרטים");
     else {
       let userLogin = {
@@ -172,14 +161,14 @@ export default connect(mapStateToProps)(function Loggin(props) {
   async function signUp() {
     console.log(signUpUser);
     if (
-      signUpUser.email == "" ||
-      signUpUser.password == "" ||
-      signUpUser.firstName == "" ||
-      signUpUser.lastName == "" ||
-      signUpUser.address.city == "" ||
-      signUpUser.address.street == "" ||
-      signUpUser.address.numHouse == 0 ||
-      signUpUser.phone == ""
+      signUpUser.email === "" ||
+      signUpUser.password === "" ||
+      signUpUser.firstName === "" ||
+      signUpUser.lastName === "" ||
+      signUpUser.address.city === "" ||
+      signUpUser.address.street === "" ||
+      signUpUser.address.numHouse === 0 ||
+      signUpUser.phone === ""
     )
       alert("עליך למלא את כל השדות!!!");
     else {
@@ -245,8 +234,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
           />
           <input
             className="inputLogin"
-            onChange={(e) => signUpUser.address.city = e.target.value}
-
+            onChange={(e) => (signUpUser.address.city = e.target.value)}
             type="text"
             name="txt"
             placeholder="עיר"
@@ -254,7 +242,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
           />
           <input
             className="inputLogin"
-            onChange={(e) => signUpUser.address.street = e.target.value}
+            onChange={(e) => (signUpUser.address.street = e.target.value)}
             type="text"
             name="txt"
             placeholder="רחוב"
@@ -262,7 +250,7 @@ export default connect(mapStateToProps)(function Loggin(props) {
           />
           <input
             className="inputLogin"
-            onChange={(e) => signUpUser.address.numHouse = e.target.value}
+            onChange={(e) => (signUpUser.address.numHouse = e.target.value)}
             type="number"
             name="number"
             placeholder="מספר בית"
@@ -325,9 +313,9 @@ export default connect(mapStateToProps)(function Loggin(props) {
           <button className="buttonLogin" onClick={signUp}>
             {state && state.endDate != null
               ? "הרשם וצור מנוי"
-              : dress == undefined || dress.color == undefined
-                ? "הרשם"
-                : "הרשם והעלה שמלה"}
+              : dress === undefined || dress.color === undefined
+              ? "הרשם"
+              : "הרשם והעלה שמלה"}
           </button>
         </div>
 
@@ -356,9 +344,9 @@ export default connect(mapStateToProps)(function Loggin(props) {
           <button className="buttonLogin" onClick={tryLogUser}>
             {state && state.endDate != null
               ? "התחבר וצור מנוי"
-              : dress == undefined || dress.color == undefined
-                ? "התחבר"
-                : "התחבר והעלה שמלה"}
+              : dress === undefined || dress.color === undefined
+              ? "התחבר"
+              : "התחבר והעלה שמלה"}
           </button>
         </div>
       </div>

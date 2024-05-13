@@ -4,13 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-
 import reducer from "./Redux/Store";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import FilesUploadComponent from "./components/try";
 const store = createStore(reducer);
-console.log(store.getState());
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>

@@ -1,22 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { CirclePicker } from "react-color";
-import { Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import {ClickAwayListener} from "@mui/base/ClickAwayListener";
 import axios from "axios";
-import { Button } from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import { Carousel } from "react-responsive-carousel";
 import AwesomeSlider from "react-awesome-slider";
 import "react-awesome-slider/dist/styles.css";
 import { useNavigate } from "react-router-dom";
 import {ErrorOutline} from '@mui/icons-material';
 
 import {
-  RadioButtonChecked,
   FavoriteBorderRounded,
   FavoriteRounded,
   AccessTime,

@@ -3,7 +3,7 @@ import "./permitDresses.css";
 import { useState, forwardRef, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Paper, Box, Fab, Snackbar, Alert, Button } from "@mui/material";
+import { Paper, Box, Fab, Snackbar, Button, Typography } from "@mui/material";
 import {
   NotInterested,
   DoneAllOutlined,
@@ -191,7 +191,7 @@ function PermitDresses() {
           </div>
         </>
       ) : (
-        <h2 className="meesegeNoDresses">אין תמונות הממתינות לאישור</h2>
+        <Typography variant="h5" textAlign={"center"}>אין תמונות הממתינות לאישור</Typography>
       )}
 
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>

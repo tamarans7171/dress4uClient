@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState,forwardRef } from "react";
 import { connect,useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Alert, AlertTitle,Stack, Button, Dialog, DialogActions, DialogTitle,Slide} from "@mui/material";
 import date from "date-and-time";
 import {FocusTrap} from '@mui/base/FocusTrap'
-const Transition = React.forwardRef(function Transition(props, ref) {
+const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
@@ -22,8 +22,8 @@ export default connect(mapStateToProps)(function Subscription(props) {
   const [cntMonthes, setCntMonthes] = useState(0);
   const [stateOfUser, setStateOfUser] = useState();
   const [endSubscription, setendSubscription] = useState(null);
-  const [openCnt, setOpenCnt] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [openCnt, setOpenCnt] = useState(false);
+  const [open, setOpen] = useState(false);
   
   useEffect(() => {
     if (user._id === undefined) {
@@ -109,8 +109,8 @@ export default connect(mapStateToProps)(function Subscription(props) {
             <h1 className="h1Subscription">המנויים שלנו</h1>
             <div className="cardSubscription card--accentSubscription">
              <div className="headSub"> <h1>
-                {stateOfUser != "new"
-                  ? stateOfUser != "renew"
+                {stateOfUser !== "new"
+                  ? stateOfUser !== "renew"
                     ? "הארכת מנוי קיים"
                     : "האם ברצונך לחדש את המנוי שלך?"
                   : "עדיין לא יצרת מנוי בעבר, האם ברצונך ליצור מנוי?"}
@@ -137,7 +137,7 @@ export default connect(mapStateToProps)(function Subscription(props) {
                         onClick={() => setOpenCnt(!openCnt)}
                         className="buttonSubscription"
                       >
-                        {openCnt ? "ביטול" : stateOfUser != "extension" ? "רכישת מנוי" : `תקופת המנוי שלך תגמר ב- ${displayDate(user.endDate)}`}
+                        {openCnt ? "ביטול" : stateOfUser !== "extension" ? "רכישת מנוי" : `תקופת המנוי שלך תגמר ב- ${displayDate(user.endDate)}`}
                       </button>
                     </div>
                     {openCnt && (
@@ -154,15 +154,15 @@ export default connect(mapStateToProps)(function Subscription(props) {
                               // placeholder=" "
                             />
                             <span className="input__labelSubscription">
-                              {stateOfUser == "extension" ? "מספר החודשים להארכת המנוי" : "מספר החודשים בהם המנוי יהיה תקף"}
+                              {stateOfUser === "extension" ? "מספר החודשים להארכת המנוי" : "מספר החודשים בהם המנוי יהיה תקף"}
                             </span>
                           </label>
-                          {endSubscription != null && cntMonthes != 0 ? (
+                          {endSubscription !== null && cntMonthes !== 0 ? (
                             <h2>
                               במידה ותמשיך את הפעילות סוף תקופת המנוי שלך תיגמר
                               ב- {displayDate(endSubscription)}
                             </h2>
-                          ) : stateOfUser && stateOfUser == "extension" ? "המנוי שלך יגמר ב" + displayEndDate(): stateOfUser == "renew" ? "פג תוקף המנוי שלך ב-" + displayEndDate() : ""}
+                          ) : stateOfUser && stateOfUser === "extension" ? "המנוי שלך יגמר ב" + displayEndDate(): stateOfUser === "renew" ? "פג תוקף המנוי שלך ב-" + displayEndDate() : ""}
                           <button
                             className="buttonSubscription"
                             onClick={() => renewSubscription()}

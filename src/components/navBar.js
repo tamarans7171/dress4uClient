@@ -1,23 +1,9 @@
 import { Outlet, useNavigate } from "react-router-dom";
-import * as React from "react";
-import { useEffect } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
-import WomanIcon from "@mui/icons-material/Woman";
+import { useEffect,useState } from "react";
+import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Container,Button,Tooltip,MenuItem} from '@mui/material'
+import {Menu as MenuIcon,Adb} from '@mui/icons-material'
 import { connect } from "react-redux";
 import logo from "./logo.png";
-import { useState } from "react";
 // import "./navBar.css";
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -30,10 +16,10 @@ function mapStateToProps(state) {
 
 export default connect(mapStateToProps)(function NavBar(props) {
   // state to style
-  const [background, setBackground] = React.useState("#444444");
-  const [color, setColor] = React.useState("white");
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [background, setBackground] = useState("#444444");
+  const [color, setColor] = useState("white");
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
   const { user } = props;
   const navigate = useNavigate();
   
@@ -53,14 +39,13 @@ export default connect(mapStateToProps)(function NavBar(props) {
   };
 
   useEffect(() => {
-    if (user.email == "rabi@gmail.com") {
+    if (user.email === "rabi@gmail.com") {
       navigate("/permitDresses");
     } else {
       navigate("/allProducts");
     }
   }, []);
 
-  // console.log(user.email == "managerdress@gmail.com");
   function enterNav() {
     setBackground("white");
     setColor("#b74160");
@@ -131,7 +116,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
                   }}
                 >
                   <Typography textAlign="center">
-                    {user._id == undefined ? "התחברות" : " החלף משתמש"}
+                    {user._id === undefined ? "התחברות" : " החלף משתמש"}
                   </Typography>
                 </MenuItem>
                 <MenuItem
@@ -142,9 +127,8 @@ export default connect(mapStateToProps)(function NavBar(props) {
                 >
                   <Typography textAlign="center">שמלות</Typography>
                 </MenuItem>
-                {user._id == "649c1c1e565273026e9bcd2d" ? (
+                {user._id === "649c1c1e565273026e9bcd2d" ? (
                   <div>
-                    {" "}
                     <MenuItem
                       onClick={(e) => {
                         handleCloseNavMenu(e);
@@ -180,13 +164,9 @@ export default connect(mapStateToProps)(function NavBar(props) {
                     <Typography textAlign="center">פרסום שמלה</Typography>
                   </MenuItem>
                 )}
-
-                {/* <MenuItem  onClick={(e)=>{handleCloseNavMenu(e);navigate("/subscription")}}>
-                  <Typography textAlign="center">יצירת מנוי</Typography>
-                </MenuItem> */}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+            <Adb sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
             <Typography
               variant="h5"
               noWrap
@@ -221,7 +201,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
                   fontWeight: "bold",
                 }}
               >
-                {user._id == undefined ? "התחברות" : " החלף משתמש"}
+                {user._id === undefined ? "התחברות" : " החלף משתמש"}
               </Button>
               <Button
                 className="navBtn"
@@ -240,7 +220,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
               >
                 שמלות
               </Button>
-              {user._id == "649c1c1e565273026e9bcd2d" ? (
+              {user._id === "649c1c1e565273026e9bcd2d" ? (
                 <>
                   <Button
                     className="navBtn"
@@ -292,7 +272,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
                       fontWeight: "bold",
                     }}
                   >
-                    משתמשים{" "}
+                    משתמשים
                   </Button>
                 </>
               ) : (
@@ -340,7 +320,7 @@ export default connect(mapStateToProps)(function NavBar(props) {
                   textDecoration: "none",
                 }}
               >
-                <img className="logo" src={logo} />
+                <img className="logo" alt="logo" src={logo} />
               </Typography>
               <Menu
                 sx={{ mt: "45px" }}

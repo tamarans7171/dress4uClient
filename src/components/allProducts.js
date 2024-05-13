@@ -7,11 +7,13 @@ import Statistics from "./statistics.js";
 import "./loading.css";
 import "./allProducts.css";
 import "./select_css.css";
+import { Box, Typography } from "@mui/material";
 import {
   LocalOfferOutlined,
   StarBorder,
   CalendarMonthOutlined,
 } from "@mui/icons-material";
+import { API_URL, doApiGet } from "../services/apiService.js";
 
 function mapStateToProps(state) {
   return {
@@ -37,9 +39,9 @@ export default connect(mapStateToProps)(function AllProducts(props) {
     <LocalOfferOutlined />,
     <LocalOfferOutlined />,
   ]);
+
   useEffect(() => {
     getDresses();
-    // getSetDresses();
   }, []);
 
   useEffect(() => {
@@ -69,49 +71,23 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   }, [filterStyles, filterColor]);
 
   async function getDresses() {
-    await axios
-      .get("http://localhost:3003/dresses/getDresses")
-      .then(async (res) => {
-        setDresses(res.data);
-        setTempDresses(res.data);
-        await axios
-          .get("http://localhost:3003/areas/getareas")
-          .then(async (areas) => {
-            console.log(areas.data);
-            // מקבל את כל תתי האזורים
-            let tempArr = res.data.map((d) => {
-              let area = areas.data.filter((a) => d.subArea.area === a._id);
-              console.log(area[0]);
-              if (area[0] !== undefined) d.subArea.area = area[0];
+    const dressesData = await doApiGet(API_URL + "/dresses/getDresses");
+    // מקבל את כל תתי האזורים
+    const areasData = await doApiGet(API_URL + "/areas/getareas");
+    let tempArr = dressesData.data.map((d) => {
+      let area = areasData.data.filter((a) => d.subArea.area === a._id);
+      console.log(area[0]);
+      if (area[0] !== undefined) d.subArea.area = area[0];
 
-              return d;
-            });
-            let t = tempArr.filter((d) => d.status === 1);
-            setDresses(t);
-            setTempDresses(t);
-          });
-      });
-  }
-  // async function getSetDresses() {
-  //   await axios
-  //     .get("http://localhost:3030/dressSet/getDressSets")
-  //     .then((res) => {
-  //       setSetsDresses(res.data);
-  //       setSetTempDresses(res.data);
-  //       console.log(res.data);
-  //     });
-  // }
-  async function deleteMe(id) {
-    await axios
-      .delete("http://localhost:3003/dresses/deleteDress/" + id)
-      .then((res) => {
-        console.log(res.data);
-      });
+      return d;
+    });
+    let t = tempArr.filter((d) => d.status === 1);
+    setDresses(t);
+    setTempDresses(t);
   }
 
   function changeOrderVal(valToChange) {
     setSelectValue(valToChange);
-    console.log(valToChange);
     sort(valToChange);
   }
 
@@ -155,133 +131,115 @@ export default connect(mapStateToProps)(function AllProducts(props) {
       setTempDresses(tempSortedArray);
     }
   }
+
   return (
-    <div className="allDresses">
+    <Box pt={10}>
       {tempDresses ? (
-        <div>
-          <div className="container">
-            <Filters
-              className={"filterPage"}
-              updateStylesFilter={(data) => setFilterStyles(data)}
-              updateColorFilter={(data) => setFilterColor(data)}
-            />
-
-            <div className="allProductsDiv">
-              <div id="app-cover">
-                <div id="select-box">
-                  <input type="checkbox" id="options-view-button" />
-                  <div id="select-button" className="brd">
-                    <div id="selected-value">
-                      <span>{selectValue}</span>
-                    </div>
-                    <div id="chevrons">
-                      {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-up" /> */}
-                      {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-down" /> */}
-                      {/* <i className="fas fa-chevron-up"></i> */}
-                      {/* <i className="fas fa-chevron-down"></i> */}
-                    </div>
+        <div className="container">
+          <Filters
+            className={"filterPage"}
+            updateStylesFilter={(data) => setFilterStyles(data)}
+            updateColorFilter={(data) => setFilterColor(data)}
+          />
+          <div className="allProductsDiv">
+            <div id="app-cover">
+              <div id="select-box">
+                <input type="checkbox" id="options-view-button" />
+                <div id="select-button" className="brd">
+                  <div id="selected-value">
+                    {selectValue}
                   </div>
-                  <div
-                    onClick={() => setSelectDis(true)}
-                    style={{ display: selectDis ? "inherit" : "none" }}
-                    id="options"
-                  >
-                    {OrderBy.map((orderVal, i) => {
-                      return (
-                        <div
-                          key={i}
-                          className="option"
-                          onClick={() => {
-                            changeOrderVal(orderVal);
-                            setSelectDis(!selectDis);
-                          }}
-                        >
-                          {/* <input className="s-c top" type="radio" name="platform" value={orderVal}/> */}
-                          {/* <input className="s-c bottom" type="radio" name="platform" value={orderVal}/> */}
-                          {/* <i className="fab fa-codepen"></i> */}
-                          {/* <FontAwesomeIcon className='i' icon="fa-solid fa-barcode" /> */}
+                  <div id="chevrons">
+                    {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-up" /> */}
+                    {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-down" /> */}
+                    {/* <i className="fas fa-chevron-up"></i> */}
+                    {/* <i className="fas fa-chevron-down"></i> */}
+                  </div>
+                </div>
+                <div
+                  onClick={() => setSelectDis(true)}
+                  style={{ display: selectDis ? "inherit" : "none" }}
+                  id="options"
+                >
+                  {OrderBy.map((orderVal, i) => {
+                    return (
+                      <div
+                        key={i}
+                        className="option"
+                        onClick={() => {
+                          changeOrderVal(orderVal);
+                          setSelectDis(!selectDis);
+                        }}
+                      >
+                        {/* <input className="s-c top" type="radio" name="platform" value={orderVal}/> */}
+                        {/* <input className="s-c bottom" type="radio" name="platform" value={orderVal}/> */}
+                        {/* <i className="fab fa-codepen"></i> */}
+                        {/* <FontAwesomeIcon className='i' icon="fa-solid fa-barcode" /> */}
 
-                          <span className="label">
-                            {/* {selestIcons[i]} */}
-                            {orderVal}
-                          </span>
-                          <span className="opt-val">{orderVal}</span>
-                        </div>
-                      );
-                    })}
+                        <span className="label">
+                          {/* {selestIcons[i]} */}
+                          {orderVal}
+                        </span>
+                        <span className="opt-val">{orderVal}</span>
+                      </div>
+                    );
+                  })}
 
-                    <div id="option-bg"></div>
+                  <div id="option-bg"></div>
+                </div>
+              </div>
+            </div>
+            {tempDresses.length > 0 ? (
+              <div style={{ marginTop: "19px" }} className="col-8">
+                <div className="container containerProducts">
+                  <div className="row">
+                    {tempDresses
+                      ? tempDresses.map((dress, i) => {
+                          if (dress.status === 1)
+                            return (
+                              <Link
+                                key={i}
+                                style={{ color: "#b74160" }}
+                                onClick={() => addViesCounter(dress)}
+                                to="/dress"
+                                state={dress}
+                              >
+                                <div
+                                  key={i}
+                                  className="boxO col-lg-4 col-sm-6 detailDiv"
+                                >
+                                  <div
+                                    style={{
+                                      backgroundImage: `url(${dress.images.imgCollection[0].url})`,
+                                    }}
+                                    className="productUp"
+                                  ></div>
+                                  <div className="productDown">
+                                    <h3>{dress.description}</h3>
+                                    <p
+                                      style={{
+                                        fontSize: "18px",
+                                        paddingBottom: "4px",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      {dress.price}₪
+                                    </p>
+                                    <p>מידה:{dress.size}</p>
+                                  </div>
+                                </div>
+                              </Link>
+                            );
+                        })
+                      : "Loading..."}
                   </div>
                 </div>
               </div>
-              {tempDresses.length > 0 ? (
-                <div style={{ marginTop: "19px" }} className="col-8">
-                  <div className="container containerProducts">
-                    <div className="row">
-                      {tempDresses ? (
-                        tempDresses.length > 0 ? (
-                          tempDresses.map((dress, i) => {
-                            if (
-                              dress.status === 1 &&
-                              (dress.dressSet === "" ||
-                                dress.dressSet === undefined)
-                            )
-                              return (
-                                <Link
-                                  key={i}
-                                  style={{ color: "#b74160" }}
-                                  onClick={() => addViesCounter(dress)}
-                                  to="/dress"
-                                  state={dress}
-                                >
-                                  <div
-                                    key={i}
-                                    className="boxO col-lg-4 col-sm-6 detailDiv"
-                                  >
-                                    <div
-                                      style={{
-                                        backgroundImage: `url(${dress.images.imgCollection[0].url})`,
-                                      }}
-                                      className="productUp"
-                                    ></div>
-                                    <div className="productDown">
-                                      <h3>{dress.description}</h3>
-                                      <p
-                                        style={{
-                                          fontSize: "18px",
-                                          paddingBottom: "4px",
-                                          fontWeight: "bold",
-                                        }}
-                                      >
-                                        {dress.price}₪
-                                      </p>
-                                      <p>מידה:{dress.size}</p>
-                                    </div>
-                                  </div>
-                                </Link>
-                              );
-                          })
-                        ) : (
-                          <>
-                            <p>;;;</p>
-                          </>
-                        )
-                      ) : (
-                        "Loading..."
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <h2 className="messegeThereIsNotMatchDresses">
-                    אין שמלות מתאימות במאגר
-                  </h2>
-                </>
-              )}
-            </div>
-            <Statistics />
+            ) : (
+              <Typography mt={6} variant="h5" textAlign={"center"}>אין שמלות מתאימות במאגר</Typography>
+            )}
           </div>
+          <Statistics />
         </div>
       ) : (
         <>
@@ -295,6 +253,6 @@ export default connect(mapStateToProps)(function AllProducts(props) {
           </div>
         </>
       )}
-    </div>
+    </Box>
   );
 });
