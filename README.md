@@ -1,65 +1,70 @@
-# projectBasmach
-dress for u😀😀😀
+# Getting Started with Create React App
 
-# Fullstack project with React, Node.js and MongoDB
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This is a fullstack project that uses React for the frontend, Node.js for the backend, and MongoDB for the database. The project allows users to create, read, update and delete items from a database.
+## Available Scripts
 
-## Starting
+In the project directory, you can run:
 
-To get started with this project, follow these steps:
+### `npm start`
 
-1. Copy the repository to your local computer
-2. Install the dependencies for the frontend and backend by running npm install on the client and server directories
-3. Start the front-end and back-end servers by running npm start on the client and server directories
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Fronted
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-The front end of this project is built with React and allows users to interact with the database through a user interface. The frontend is located in the client directory.
+### `npm test`
 
-### dependency
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-The front-end dependencies are listed in the client/package.json file and include:
+### `npm run build`
 
-- react and react-dom for building the user interface
-- axios for making HTTP requests to the back-end API
-- react-router-dom to handle client-side routing
-- bootstrap for designing the user interface
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Starting the frontend
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-To start the frontend, run npm start in the client directory. This will start the development server and open the app in your default browser.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Backend
+### `npm run eject`
 
-The backend of this project is built with Node.js and uses MongoDB as the database. The backend is located in the server directory.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-### dependency
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-The backend dependencies are listed in the server/package.json file and include:
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-- express for building the server and handling HTTP requests
-- mongoose to interact with the MongoDB database
-- cors to handle cross origin requests
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Starting the backend
+## Learn More
 
-To start the backend, run npm start in the server directory. This will start the server and listen for HTTP requests on port 5000.
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-## API
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-The backend API allows users to create, read, update, and delete items from the database. The API endpoints are:
+### Code Splitting
 
-- GET /items - Get all items from the database
-- POST /items - Create a new item in the database
-- GET /items/:id - Get a single item from the database by id
-- PUT /items/:id - Update a single item in the database by id
-- DELETE /items/:id - Delete a single item from the database by id
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-## Database
+### Analyzing the Bundle Size
 
-This project uses MongoDB as the database. The database is hosted on MongoDB Atlas and can be accessed using the connection string in the server/config/db.js file.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-## Summary
+### Making a Progressive Web App
 
-that's it! You should now have a working fullstack project using React, Node.js and MongoDB. Feel free to modify the code and experiment with different features.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
