@@ -167,7 +167,7 @@ export default connect(mapStateToProps)(function Subscription(props) {
                             className="buttonSubscription"
                             onClick={() => renewSubscription()}
                           >
-                            לתשלום {cntMonthes * 30} ₪
+                            לתשלום ₪{cntMonthes * 30} 
                           </button>
                         </div>
                       </>

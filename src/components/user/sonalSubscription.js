@@ -211,7 +211,7 @@ export default connect(mapStateToProps)(function SonalSubscription(props) {
                       color="secondary"
                       aria-label="add"
                     >
-                      לתשלום {cntMonthes * 30} ₪
+                      לתשלום ₪{cntMonthes * 30} 
                     </Fab>
                   </div>
                 </Stack>

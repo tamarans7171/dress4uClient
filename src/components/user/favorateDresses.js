@@ -96,7 +96,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
                         fontWeight: "bold",
                       }}
                     >
-                      {d.price}₪{" "}
+                      ₪{d.price}
                     </p>
                     <p>מידה:{d.size}</p>
                     {/* <CirclePicker  colors={[dress.color.name]}/> */}

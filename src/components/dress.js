@@ -234,7 +234,7 @@ export default connect(mapStateToProps)(function Dress(props) {
               <hr />
               <h1>{dress.description}</h1>
               <h3>מידה {dress.size}</h3>
-              <h3 className="priceDress">{dress.price}₪</h3>
+              <h3 className="priceDress">₪{dress.price}</h3>
               <div className="row ">
                 {" "}
                 <h2 style={{ margin: "0px" }}>סגנונות: </h2>

@@ -1,11 +1,12 @@
-import React from 'react'
 import "./footer.css"
+import { Typography,Box } from '@mui/material'
+
 function Footer() {
   return (
-    <div className='footer'>
+    <Box className="footer">
       <hr/>
-      <p>© כל הזכויות שמורות לאלישבע & תמר </p>
-    </div>
+      <Typography>© כל הזכויות שמורות לאלישבע & תמר </Typography>
+    </Box>
   )
 }
 

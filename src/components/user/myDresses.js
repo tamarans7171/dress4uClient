@@ -264,7 +264,7 @@ let tempDress = dressesInAdd[index]
                                 fontWeight: "bold",
                               }}
                             >
-                              {dress.price}₪{" "}
+                              ₪{dress.price}
                             </p>
                             <p>Size:{dress.size}</p>
                           </div>
@@ -341,7 +341,7 @@ let tempDress = dressesInAdd[index]
                       color="secondary"
                       aria-label="add"
                     >
-                      לתשלום {cntMonthes * 10} ₪
+                      לתשלום ₪{cntMonthes * 10} 
                     </Fab>
                   </div>
                 </Stack>
@@ -390,7 +390,7 @@ let tempDress = dressesInAdd[index]
                                 fontWeight: "bold",
                               }}
                             >
-                              {dress.price}₪{" "}
+                              ₪{dress.price}
                             </p>
                             <p>Size:{dress.size}</p>
                           </div>
@@ -528,7 +528,7 @@ let tempDress = dressesInAdd[index]
                                 fontWeight: "bold",
                               }}
                             >
-                              {dress.price}₪{" "}
+                              ₪{dress.price}
                             </p>
                             <p>Size:{dress.size}</p>
                           </div>

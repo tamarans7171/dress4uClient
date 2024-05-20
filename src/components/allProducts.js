@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Filters from "./filters.js";
-import axios from "axios";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Statistics from "./statistics.js";
@@ -13,7 +12,7 @@ import {
   StarBorder,
   CalendarMonthOutlined,
 } from "@mui/icons-material";
-import { API_URL, doApiGet } from "../services/apiService.js";
+import { API_URL, doApiGet, doApiMethod } from "../services/apiService.js";
 
 function mapStateToProps(state) {
   return {
@@ -93,11 +92,11 @@ export default connect(mapStateToProps)(function AllProducts(props) {
 
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
-    await axios
-      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
-      .then((ans) => {
-        console.log(ans.data);
-      });
+    await doApiMethod(
+      `${API_URL}/dresses/updateDress/${dress._id}`,
+      "PUT",
+      dress
+    );
   }
 
   function sort(val) {
@@ -146,9 +145,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
               <div id="select-box">
                 <input type="checkbox" id="options-view-button" />
                 <div id="select-button" className="brd">
-                  <div id="selected-value">
-                    {selectValue}
-                  </div>
+                  <div id="selected-value">{selectValue}</div>
                   <div id="chevrons">
                     {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-up" /> */}
                     {/* <FontAwesomeIcon className='i' icon="fa-solid fa-chevron-down" /> */}
@@ -223,7 +220,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
                                         fontWeight: "bold",
                                       }}
                                     >
-                                      {dress.price}₪
+                                      ₪{dress.price}
                                     </p>
                                     <p>מידה:{dress.size}</p>
                                   </div>
@@ -236,7 +233,9 @@ export default connect(mapStateToProps)(function AllProducts(props) {
                 </div>
               </div>
             ) : (
-              <Typography mt={6} variant="h5" textAlign={"center"}>אין שמלות מתאימות במאגר</Typography>
+              <Typography mt={6} variant="h5" textAlign={"center"}>
+                אין שמלות מתאימות במאגר
+              </Typography>
             )}
           </div>
           <Statistics />

@@ -12,7 +12,12 @@ import ImageListItem from "@mui/material/ImageListItem";
 import { border, borderColor, style } from "@mui/system";
 import { Checkroom } from "@mui/icons-material";
 import "./addDress.css";
-import {API_URL, doApiGet, doApiMethod, TOKEN_NAME} from '../services/apiService'
+import {
+  API_URL,
+  doApiGet,
+  doApiMethod,
+  TOKEN_NAME,
+} from "../services/apiService";
 function mapStateToProps(state) {
   return {
     user: state.User.user,
@@ -61,25 +66,22 @@ export default connect(mapStateToProps)(function AddDress(props) {
   }, [areaChoosen]);
 
   async function getStyles() {
-    await axios.get("http://localhost:3003/styles/getStyles").then((res) => {
-      setStyles(res.data);
-    });
+    const stylesData = await doApiGet(API_URL + "/styles/getStyles");
+    setStyles(stylesData.data);
   }
 
   async function getAreas() {
-    await axios.get("http://localhost:3003/areas/getAreas").then((res) => {
-      setAreas(res.data);
-    });
+    const areasData = await doApiGet(API_URL + "/areas/getAreas");
+    setAreas(areasData.data);
   }
 
   async function getSubAreas() {
-    if (areaChoosen)
-      await axios
-        .get("http://localhost:3003/subAreas/getSubAreasByArea/" + areaChoosen)
-        .then((res) => {
-          console.log(res.data);
-          setSubAreas(res.data);
-        });
+    if (areaChoosen) {
+      const subAreasByAreaData = doApiGet(
+        `${API_URL}/subAreas/getSubAreasByArea/${areaChoosen}`
+      );
+      setSubAreas(subAreasByAreaData.data);
+    }
   }
 
   async function getColors() {
@@ -255,7 +257,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
       minHeight: "30px",
     }),
   };
-  
+
   function addDressToSet() {
     let temp = newDress;
     temp.style = selectedOptions;
