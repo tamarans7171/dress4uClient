@@ -177,7 +177,6 @@ export default connect(mapStateToProps)(function AddDress(props) {
       </components.Option>
     );
   };
-  console.log(Object.keys(colorsDictionary));
   const customStyles = {
     control: (base) => ({
       ...base,
