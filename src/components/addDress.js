@@ -86,15 +86,15 @@ export default connect(mapStateToProps)(function AddDress(props) {
   }
 
   async function saveNewDress() {
-    let temp = {...newDress};
-    temp.style = selectedOptions;
+    let tempNewDress = { ...newDress };
+    tempNewDress.style = selectedOptions;
     if (
-      newDress.color === "" ||
-      newDress.size === "" ||
-      newDress.price === "" ||
-      newDress.style.length === 0 ||
-      newDress.description === "" ||
-      images.length === 0
+      tempNewDress.color === "" ||
+      tempNewDress.size === "" ||
+      tempNewDress.price === "" ||
+      tempNewDress.style.length === 0 ||
+      tempNewDress.description === "" ||
+      !images.imgCollection
     )
       alert("עליך למלא את כל הפרטים!");
     else {
@@ -111,7 +111,7 @@ export default connect(mapStateToProps)(function AddDress(props) {
           "עליך להכניס מידה תקינה: לילדות בין 0-20, ולנשים בין 34-54"
         );
       } else {
-        dispatch({ type: "UPDATEDRESS", payload: temp });
+        dispatch({ type: "UPDATEDRESS", payload: tempNewDress });
         dispatch({ type: "UPDATEIMAGES", payload: formData });
 
         if (user.firstName === undefined) {

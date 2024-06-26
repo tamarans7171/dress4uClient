@@ -13,6 +13,7 @@ import {
   CalendarMonthOutlined,
 } from "@mui/icons-material";
 import { API_URL, doApiGet, doApiMethod } from "../services/apiService.js";
+import Loader from "./loader.js";
 
 function mapStateToProps(state) {
   return {
@@ -44,8 +45,6 @@ export default connect(mapStateToProps)(function AllProducts(props) {
   }, []);
 
   useEffect(() => {
-    console.log(filterColor);
-    console.log(filterStyles);
     var filtered = dresses; // כל השמלות
     if (filterColor || filterStyles.length > 0) {
       // במידה ויש סינון מופעל
@@ -54,7 +53,6 @@ export default connect(mapStateToProps)(function AllProducts(props) {
           // במידה ויש סינון צבע
           var shouldShow = filterColor === d.color._id;
           if (!shouldShow) return false; // אם הצבע לא תואם - שקר
-          console.log("filterByStyle: " + filterStyles);
           if (filterStyles.length === 0) return true;
         }
         var dressStyles = d.style.map((s) => s._id);
@@ -75,7 +73,6 @@ export default connect(mapStateToProps)(function AllProducts(props) {
     const areasData = await doApiGet(API_URL + "/areas/getareas");
     let tempArr = dressesData.data.map((d) => {
       let area = areasData.data.filter((a) => d.subArea.area === a._id);
-      console.log(area[0]);
       if (area[0] !== undefined) d.subArea.area = area[0];
 
       return d;
@@ -241,16 +238,7 @@ export default connect(mapStateToProps)(function AllProducts(props) {
           <Statistics />
         </div>
       ) : (
-        <>
-          <div className="loader">
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-          </div>
-        </>
+        <Loader />
       )}
     </Box>
   );

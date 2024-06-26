@@ -1,13 +1,14 @@
 import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
+import { Fab } from "@mui/material";
+import { Add } from "@mui/icons-material";
 import "./payments.css";
+import { paymentsTypes } from "../Constants/subscription";
+import { API_URL, doApiMethod } from "../services/apiService";
+
 function mapStateToProps(state) {
-  // const {state}=state
   return {
     user: state.User.user,
     dress: state.Dress.dress,
@@ -15,37 +16,33 @@ function mapStateToProps(state) {
   };
 }
 export default connect(mapStateToProps)(function Payments(props) {
-  const PRICE = 30;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
   const { user } = props;
   const { dress } = props;
   const { images } = props;
-  const { dressToExtention } = props;
-  const { endTime } = props;
-  const location = useLocation();
-  const [sum, setSum] = useState(location.state.sum);
-  const [type, setType] = useState(location.state.type);
-  const [endDate, setEndDate] = useState(location.state.endDate);
-  const [newPayment, setNewPayment] = useState({
+  const { sum, type, endDate, dressToSubscribe, endTime, dressToExtention } =
+    location.state;
+  const newPayment = {
     user: user._id,
     amount: sum,
     date: new Date(),
     isLandlord: true,
-    dress: location.state.dressToSubscribe,
-  });
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  // console.log(location.state);
+    dress: dressToSubscribe,
+  };
 
   async function subscribeDress() {
     let tempPayment = newPayment;
     tempPayment.isLandlord = false;
-    console.log(tempPayment);
-    await axios
-      .post("http://localhost:3003/payments/addPayment", tempPayment)
-      .then((resPay) => {
-        console.log(resPay.data);
-        navigate("/allProducts");
-      });
+    await doApiMethod(
+      `${API_URL}/payments/addPayment`,
+      "POST",
+      tempPayment
+    ).then((res) => {
+      console.log(res);
+      if (res) navigate("/allProducts");
+    });
   }
 
   async function saveDress() {
@@ -53,36 +50,23 @@ export default connect(mapStateToProps)(function Payments(props) {
     axios
       .post("http://localhost:3003/images/upload-images", images, {})
       .then(async (res) => {
-        console.log(res.data.imagesCreated._id);
         dress.images = res.data.imagesCreated._id;
         dress.landlord = user._id;
-        console.log(dress);
         try {
+          delete dress.defaultImage;
           await axios
-          .post("http://localhost:3003/dresses/addDress", dress)
-          .then(async (resp) => {
-            alert(
-              "יש 😊 הצלחת להעלות את השמלה לאתר, השמלה רק צריכה לעבור את אישור המנהל."
-            );
-            // if(resp.data.dressSet == undefined) {
-            //   console.log("newPayment"+newPayment);
-            //   newPayment.dress = resp.data._id;
-            //   await axios.post("http://localhost:3030/payment/addPayment", newPayment).then((resPay)=>{
-            //     console.log(resPay.data);
-            //   })
-            // } else {
-            //     // newPayment.dress
+            .post("http://localhost:3003/dresses/addDress", dress)
+            .then(async (resp) => {
+              alert(
+                "יש 😊 הצלחת להעלות את השמלה לאתר, השמלה רק צריכה לעבור את אישור המנהל."
+              );
+              dispatch({ type: "UPDATEDRESS", payload: null });
 
-            // }
-            dispatch({ type: "UPDATEDRESS", payload: null });
-
-            navigate("/allProducts");
-          });
+              navigate("/allProducts");
+            });
         } catch (error) {
-          console.log(error);
-         
+          console.error(error);
         }
-        
       });
   }
 
@@ -90,30 +74,26 @@ export default connect(mapStateToProps)(function Payments(props) {
     let tempPayment = newPayment;
     tempPayment.isLandlord = false;
     user.endDate = endDate;
-    if (type == "new") {
+    if (type === "new") {
       user.startDate = new Date();
     }
     await axios
       .put("http://localhost:3003/users/updateUser/" + user._id, user)
       .then(async (res) => {
-        console.log(res.data);
         await axios
           .post("http://localhost:3003/payments/addPayment", tempPayment)
           .then((resPay) => {
-            console.log(resPay.data);
-            console.log("103 payments");
             navigate("/allProducts");
           });
       });
   }
 
   async function updateDressEndTime() {
-    let tempDress = location.state.dressToExtention
+    let tempDress = dressToExtention;
     let tempPayment = newPayment;
-    console.log(tempDress);
-    tempPayment.dress =tempDress._id;
-    
-    tempDress.endTime = location.state.endTime;
+    tempPayment.dress = tempDress._id;
+
+    tempDress.endTime = endTime;
 
     await axios
       .put(
@@ -121,16 +101,14 @@ export default connect(mapStateToProps)(function Payments(props) {
         tempDress
       )
       .then(async (res) => {
-        console.log(res.data);
         await axios
           .post("http://localhost:3003/payments/addPayment", tempPayment)
           .then((resPay) => {
-            console.log(resPay.data);
             navigate("/allProducts");
           });
       });
   }
-  console.log("❤️"+type);
+
   return (
     <div className="paymentComponent">
       <div className="addDress addDressPage">
@@ -138,23 +116,7 @@ export default connect(mapStateToProps)(function Payments(props) {
           <h1 className="h1Add">תשלומים</h1>
           <div className="cardAdd card--accentAdd">
             <h2>לתשלום ₪{sum}</h2>
-            <h3>
-              סוג תשלום:{" "}
-              {type == "renew"
-                ? "חידוש מנוי"
-                : type == "newDress"
-                ? "פרסום שמלה"
-                : type == "subscribeDress"
-                ? "רכישת מנוי לשמלה"
-                : type == "extension"
-                ? "הארכת מנוי קיים"
-                : type == "new"
-                ? "יצירת מנוי חדש"
-                : type == "extentionDress"
-                ? "הארכת זמן פרסום שמלה"
-                : "???????"}
-              .
-            </h3>
+            <h3>סוג תשלום: {paymentsTypes[type]}</h3>
 
             <PayPalScriptProvider
               className="paymentComponent"
@@ -173,11 +135,11 @@ export default connect(mapStateToProps)(function Payments(props) {
               <Fab
                 variant="extended"
                 onClick={
-                  type == "subscribeDress"
+                  type === "subscribeDress"
                     ? subscribeDress
-                    : type == "newDress"
+                    : type === "newDress"
                     ? saveDress
-                    : type == "extentionDress"
+                    : type === "extentionDress"
                     ? updateDressEndTime
                     : saveSubscription
                 }
@@ -185,7 +147,7 @@ export default connect(mapStateToProps)(function Payments(props) {
                 className="addDressBtn"
                 aria-label="add"
               >
-                <AddIcon />
+                <Add />
                 שמירת נתונים
               </Fab>
             </div>

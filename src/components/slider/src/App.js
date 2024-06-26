@@ -1,4 +1,4 @@
-import MultiRangeSlider from "./component/multiRangeSlider/MultiRangeSlider";
+import MultiRangeSlider from "./Component/multiRangeSlider/MultiRangeSlider";
 import "./styles.css";
 
 const App = () => {

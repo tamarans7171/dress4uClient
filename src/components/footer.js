@@ -5,7 +5,7 @@ function Footer() {
   return (
     <Box className="footer">
       <hr/>
-      <Typography>© כל הזכויות שמורות לאלישבע & תמר </Typography>
+      <Typography>© כל הזכויות שמורות לתמר </Typography>
     </Box>
   )
 }

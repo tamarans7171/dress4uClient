@@ -9,6 +9,7 @@ import {
   DoneAllOutlined,
   DoneOutline,
 } from "@mui/icons-material";
+import Loader from "../loader";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -180,18 +181,11 @@ function PermitDresses() {
           </Fab>
         </div>
       ) : loading ? (
-        <>
-          <div className="loader">
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-          </div>
-        </>
+        <Loader />
       ) : (
-        <Typography variant="h5" textAlign={"center"}>אין תמונות הממתינות לאישור</Typography>
+        <Typography variant="h5" textAlign={"center"}>
+          אין תמונות הממתינות לאישור
+        </Typography>
       )}
 
       <Snackbar open={openAlert} autoHideDuration={6000} onClose={handleClose}>

@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 
 import date from "date-and-time";
 import "./myDresses.css";
+import Loader from "../loader";
+import { API_URL, doApiGet, doApiMethod } from "../../services/apiService";
 function mapStateToProps(state) {
   return {
     user: state.User.user,
@@ -29,11 +31,12 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   const [dressesInAdd, setDressesInAdd] = useState([]);
   const [waitingDresses, setWaitingDresses] = useState([]);
   const [disPermiitionDresses, setDisPermiitionDresses] = useState([]);
-  const [selectedIndexDisPermitionDress, setSelectedIndexDisPermitionDress] = useState(-1);
+  const [selectedIndexDisPermitionDress, setSelectedIndexDisPermitionDress] =
+    useState(-1);
   const [selectedIndexDressInAdd, setSelectedIndexDressInAdd] = useState(-1);
-  const [endTimeDress, setEndTimeDress] = useState()
-  const [finished, setFinished] = useState(false)
-  const [cntMonthes, setCntMonthes] = useState(0)
+  const [endTimeDress, setEndTimeDress] = useState();
+  const [finished, setFinished] = useState(false);
+  const [cntMonthes, setCntMonthes] = useState(0);
   const [newPayment, setNewPayment] = useState({
     user: user._id,
     amount: 30,
@@ -71,7 +74,6 @@ export default connect(mapStateToProps)(function MyDresses(props) {
               break;
             case 1:
               setDressesInAdd([...dressesInAdd, element]);
-              console.log("1 ------------");
               break;
 
             default:
@@ -79,7 +81,7 @@ export default connect(mapStateToProps)(function MyDresses(props) {
           }
         });
       });
-      setFinished(true)
+    setFinished(true);
   }
 
   const style = {
@@ -120,13 +122,12 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   const handleOpenExtentionDress = (indexDress) => {
     setOpenExtentionDress(true);
     setSelectedIndexDressInAdd(indexDress);
-     setEndTimeDress(dressesInAdd[indexDress].endTime)
+    setEndTimeDress(dressesInAdd[indexDress].endTime);
   };
 
   const handleCloseExtentionDress = () => {
     setOpenExtentionDress(false);
     setSelectedIndexDressInAdd(-1);
-   
   };
 
   async function uploadDress(dressIndex) {
@@ -164,27 +165,18 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   }
 
   async function deleteDress(dressIndex) {
-    await axios
-      .delete(
-        "http://localhost:3003/dresses/deleteDress/" +
-          disPermiitionDresses[dressIndex]
-      )
-      .then(async (respDress) => {
-        console.log(respDress.data);
-        await axios
-          .delete(
-            "http://localhost:3003/images/deleteImages/" +
-              disPermiitionDresses[dressIndex].images._id
-          )
-          .then((respImages) => {
-            console.log(respImages.data);
-          });
+    await doApiMethod(
+      `${API_URL}/dresses/deleteDress/${disPermiitionDresses[dressIndex]}`,
+      "DELETE"
+    ).then(async (respDress) => {
+      await doApiMethod(
+        `${API_URL}/images/deleteImages/${disPermiitionDresses[dressIndex].images._id}`,
+        "DELETE"
+      ).then((respImages) => {
+        console.log(respImages.data);
       });
+    });
   }
-
-
-
-
 
   function displayDate(date) {
     let newDate = new Date(date);
@@ -198,18 +190,13 @@ export default connect(mapStateToProps)(function MyDresses(props) {
   }
 
   function addMonthes(cntMonthes) {
-    let endTime =  new Date(dressesInAdd[selectedIndexDressInAdd].endTime);
-    // console.log(endDate);
-    //   endDate.setMonth(endDate.getMonth() + cntMonthes)
-    //   var newDate = new Date(endDate.setMonth(endDate.getMonth()+1));
-    //   newDate.setFullYear(newDate.getFullYear()-1)
+    let endTime = new Date(dressesInAdd[selectedIndexDressInAdd].endTime);
     let d = date.addMonths(endTime, Number(cntMonthes));
     setEndTimeDress(d);
   }
 
   function renewSubscription(index) {
-console.log(index);
-let tempDress = dressesInAdd[index]
+    let tempDress = dressesInAdd[index];
     if (cntMonthes <= 0) {
       alert("עליך לבחור כמות הגדולה מ-0");
     } else {
@@ -218,198 +205,196 @@ let tempDress = dressesInAdd[index]
           sum: cntMonthes * 10,
           type: "extentionDress",
           endTime: endTimeDress,
-          dressToExtention:tempDress
+          dressToExtention: tempDress,
         },
       });
     }
   }
   return (
-    (<div>{finished&&
-      <div className="typeDressesContainer">
-        <h2 className="divider line double-razor" contenteditable>
-          שמלות המתפרסמות על ידך באתר
-        </h2>
-        {dressesInAdd.length > 0 ? (
-          <div style={{ marginTop: "19px" }}>
-            <div className="container containerProducts">
-              <div className="row">
-                {dressesInAdd.map((dress, i) => {
-                  console.log(dress.images.imgCollection[0].url)
-                  if (dress.dressSet == "" || dress.dressSet == undefined)
-                    return (
-                      <Link
-                        key={i}
-                        style={{ color: "#b74160" }}
-                        onClick={() => {
-                          handleOpenExtentionDress(i);
-                        }}
-                      >
-                        {" "}
-                        <div
-                          key={i}
-                          className="boxO col-lg-4 col-sm-6 detailDiv"
-                        >
-                          <div
-                            style={{
-                              backgroundImage: `url(${dress.images.imgCollection[0].url})`,
-                            }}
-                            className="productUp"
-                          ></div>
-                          <div className="productDown">
-                            <h3>{dress.description}</h3>
-                            <p
-                              style={{
-                                fontSize: "18px",
-                                paddingBottom: "4px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              ₪{dress.price}
-                            </p>
-                            <p>Size:{dress.size}</p>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                })}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <>
-            <p className="messegeThereIsNotMatchDressesType">
-              {/* אין לך שמלות בפירסום */}
-            </p>
-          </>
-        )}
-        <Modal
-          open={openExtentionDress}
-          onClose={handleCloseExtentionDress}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style2}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-                   <article className="l-design-widhtSubscriptionDress">
-            <div className="cardSubscription card--accentSubscription">
-              <div className="headSub">
-                {" "}
-                <h1>
-                 עדכון שמלה
-                </h1>
-              </div>
-                <Stack
-                  style={{ padding: "13px",background:"white", height:"465px" }}
-                  alignItems="center"
-                  spacing={2}
-                >
-                  <h1 className="h1Subscription">
-                    { `תוקף פרסום השמלה שלך יפוג ב- ${selectedIndexDressInAdd != -1 && displayDate(dressesInAdd[selectedIndexDressInAdd].endTime)}`}
-                  </h1>
-                  <div className="card--accentSubscription">
-                    <h3>
-                      {" "}
-                      {"הכנס את מספר החודשים להארכת זמן פרסום השמלה"}
-                    </h3>
-                    <label className="inputSubscription">
-                      <input
-                        onChange={(e) => {
-                          setCntMonthes(e.target.value);
-                          addMonthes(e.target.value);
-                        }}
-                        className="input__fieldwidhtSubscriptionDress"
-                        type="number"
-                        placeholder="₪10 עבור חודש לפרסום שמלה"
-                      />
-                      {/* <span className="input__labelSubscription">
-                        מספר חודשים
-                      </span> */}
-                    </label>
-                    {selectedIndexDressInAdd != -1 && endTimeDress != dressesInAdd[selectedIndexDressInAdd].endTime && cntMonthes != 0 ? (
-                      <h4>
-                        במידה ותמשיך את הפעילות סוף תקופת המנוי שלך תיגמר ב-{" "}
-                        {displayDate(endTimeDress)}
-                      </h4>
-                    ) : (
-                      ""
-                    )}
-                    <Fab
-                      onClick={() => renewSubscription(selectedIndexDressInAdd)}
-                      className="buttonSubscription addDressBtn"
-                      variant="extended"
-                      size="medium"
-                      color="secondary"
-                      aria-label="add"
+    <div>
+      {finished && (
+        <div className="typeDressesContainer">
+          <h2 className="divider line double-razor" contenteditable>
+            שמלות המתפרסמות על ידך באתר
+          </h2>
+          {dressesInAdd.length > 0 ? (
+            <div style={{ marginTop: "19px" }}>
+              <div className="container containerProducts">
+                <div className="row">
+                  {dressesInAdd.map((dress, i) => (
+                    <Link
+                      key={i}
+                      style={{ color: "#b74160" }}
+                      onClick={() => {
+                        handleOpenExtentionDress(i);
+                      }}
                     >
-                      לתשלום ₪{cntMonthes * 10} 
-                    </Fab>
-                  </div>
-                </Stack>
-            </div>
-          </article>
-            </Typography>
-          </Box>
-        </Modal>
-      </div>}
-      {finished&&
-      <div className="typeDressesContainer">
-        <h2 className="divider line double-razor" contenteditable>
-          שמלות שלא אושרו
-        </h2>
-        {disPermiitionDresses.length > 0 ? (
-          <div style={{ marginTop: "19px" }}>
-            <div className="container containerProducts">
-              <div className="row">
-                {disPermiitionDresses.map((dress, i) => {
-                  if (dress.dressSet == "" || dress.dressSet == undefined)
-                    return (
-                      <Link
-                        onClick={() => {
-                          handleOpen(i);
-                        }}
-                        key={i}
-                        style={{ color: "#b74160" }}
-                      >
-                        {" "}
+                      <div key={i} className="boxO col-lg-4 col-sm-6 detailDiv">
                         <div
-                          key={i}
-                          className="boxO col-lg-4 col-sm-6 detailDiv"
-                        >
-                          <div
+                          style={{
+                            backgroundImage: `url(${dress.images.imgCollection[0].url})`,
+                          }}
+                          className="productUp"
+                        ></div>
+                        <div className="productDown">
+                          <h3>{dress.description}</h3>
+                          <p
                             style={{
-                              backgroundImage: `url(${dress.images.imgCollection[0].url})`,
+                              fontSize: "18px",
+                              paddingBottom: "4px",
+                              fontWeight: "bold",
                             }}
-                            className="productUp"
-                          ></div>
-                          <div className="productDown">
-                            <h3>{dress.description}</h3>
-                            <p
-                              style={{
-                                fontSize: "18px",
-                                paddingBottom: "4px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              ₪{dress.price}
-                            </p>
-                            <p>Size:{dress.size}</p>
-                          </div>
+                          >
+                            ₪{dress.price}
+                          </p>
+                          <p>Size:{dress.size}</p>
                         </div>
-                      </Link>
-                    );
-                })}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <p className="messegeThereIsNotMatchDressesType">
-              {/* אין לך שמלות שלא אושרו */}
-            </p>
-          </>
-        )}
-      </div>}
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+          ) : (
+            <>
+              <p className="messegeThereIsNotMatchDressesType">
+                אין לך שמלות בפירסום
+              </p>
+            </>
+          )}
+          <Modal
+            open={openExtentionDress}
+            onClose={handleCloseExtentionDress}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style2}>
+              <Typography id="modal-modal-title" variant="h6" component="h2">
+                <article className="l-design-widhtSubscriptionDress">
+                  <div className="cardSubscription card--accentSubscription">
+                    <div className="headSub">
+                      <h1>עדכון שמלה</h1>
+                    </div>
+                    <Stack
+                      style={{
+                        padding: "13px",
+                        background: "white",
+                        height: "465px",
+                      }}
+                      alignItems="center"
+                      spacing={2}
+                    >
+                      <h1 className="h1Subscription">
+                        {`תוקף פרסום השמלה שלך יפוג ב- ${
+                          selectedIndexDressInAdd !== -1 &&
+                          displayDate(
+                            dressesInAdd[selectedIndexDressInAdd].endTime
+                          )
+                        }`}
+                      </h1>
+                      <div className="card--accentSubscription">
+                        <h3>{"הכנס את מספר החודשים להארכת זמן פרסום השמלה"}</h3>
+                        <label className="inputSubscription">
+                          <input
+                            onChange={(e) => {
+                              setCntMonthes(e.target.value);
+                              addMonthes(e.target.value);
+                            }}
+                            className="input__fieldwidhtSubscriptionDress"
+                            type="number"
+                            placeholder="₪10 עבור חודש לפרסום שמלה"
+                          />
+                        </label>
+                        {selectedIndexDressInAdd !== -1 &&
+                        endTimeDress !==
+                          dressesInAdd[selectedIndexDressInAdd].endTime &&
+                        cntMonthes !== 0 ? (
+                          <h4>
+                            במידה ותמשיך את הפעילות סוף תקופת המנוי שלך תיגמר ב-
+                            {displayDate(endTimeDress)}
+                          </h4>
+                        ) : (
+                          ""
+                        )}
+                        <Fab
+                          onClick={() =>
+                            renewSubscription(selectedIndexDressInAdd)
+                          }
+                          className="buttonSubscription addDressBtn"
+                          variant="extended"
+                          size="medium"
+                          color="secondary"
+                          aria-label="add"
+                        >
+                          לתשלום ₪{cntMonthes * 10}
+                        </Fab>
+                      </div>
+                    </Stack>
+                  </div>
+                </article>
+              </Typography>
+            </Box>
+          </Modal>
+        </div>
+      )}
+      {finished && (
+        <div className="typeDressesContainer">
+          <h2 className="divider line double-razor" contenteditable>
+            שמלות שלא אושרו
+          </h2>
+          {disPermiitionDresses.length > 0 ? (
+            <div style={{ marginTop: "19px" }}>
+              <div className="container containerProducts">
+                <div className="row">
+                  {disPermiitionDresses.map((dress, i) => {
+                    if (dress.dressSet === "" || dress.dressSet === undefined)
+                      return (
+                        <Link
+                          onClick={() => {
+                            handleOpen(i);
+                          }}
+                          key={i}
+                          style={{ color: "#b74160" }}
+                        >
+                          <div
+                            key={i}
+                            className="boxO col-lg-4 col-sm-6 detailDiv"
+                          >
+                            <div
+                              style={{
+                                backgroundImage: `url(${dress.images.imgCollection[0].url})`,
+                              }}
+                              className="productUp"
+                            ></div>
+                            <div className="productDown">
+                              <h3>{dress.description}</h3>
+                              <p
+                                style={{
+                                  fontSize: "18px",
+                                  paddingBottom: "4px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                ₪{dress.price}
+                              </p>
+                              <p>Size:{dress.size}</p>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                  })}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <p className="messegeThereIsNotMatchDressesType">
+                {/* אין לך שמלות שלא אושרו */}
+              </p>
+            </>
+          )}
+        </div>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -432,7 +417,7 @@ let tempDress = dressesInAdd[index]
                   columnSpacing={{ xs: 1, sm: 2, md: 2 }}
                 >
                   {disPermiitionDresses.length > 0 &&
-                    selectedIndexDisPermitionDress != -1 &&
+                    selectedIndexDisPermitionDress !== -1 &&
                     disPermiitionDresses[
                       selectedIndexDisPermitionDress
                     ].images.imgCollection.map((image, i) => (
@@ -440,20 +425,19 @@ let tempDress = dressesInAdd[index]
                         <Item
                           style={{
                             border: `solid 9px ${
-                              image.isPermited == -1 ? "red" : "green"
+                              image.isPermited === -1 ? "red" : "green"
                             }`,
                             background: `url(${image.url}),grey`,
                             backgroundSize: "contain",
                             backgroundPosition: "center",
                             backgroundRepeat: "no-repeat",
                           }}
-                        ></Item>{" "}
+                        ></Item>
                       </Grid>
                     ))}
                 </Grid>
               </Box>
               <div className="containerButtonsDresses">
-                {" "}
                 <Button
                   style={{
                     paddingLeft: "25px",
@@ -462,7 +446,7 @@ let tempDress = dressesInAdd[index]
                   }}
                   onClick={() => {
                     deleteDress(selectedIndexDisPermitionDress);
-                    handleClose()
+                    handleClose();
                   }}
                   variant="outlined"
                   color={"error"}
@@ -474,8 +458,7 @@ let tempDress = dressesInAdd[index]
                   style={{ paddingLeft: "25px", marginTop: "25px" }}
                   onClick={() => {
                     uploadDress(selectedIndexDisPermitionDress);
-                    handleClose()
-
+                    handleClose();
                   }}
                   variant="outlined"
                   color={"success"}
@@ -488,76 +471,66 @@ let tempDress = dressesInAdd[index]
           </Typography>
         </Box>
       </Modal>
-      {finished&&
-      <div className="typeDressesContainer">
-        <h2 className="divider line double-razor" contenteditable>
-          שמלות בהמתנה לאישור המנהל
-        </h2>
-        {waitingDresses.length > 0 ? (
-          <div style={{ marginTop: "19px" }}>
-            <div className="container containerProducts">
-              <div className="row">
-                {waitingDresses.map((dress, i) => {
-                                    console.log(dress.images.imgCollection[0].url)
+      {finished && (
+        <div className="typeDressesContainer">
+          <h2 className="divider line double-razor" contenteditable>
+            שמלות בהמתנה לאישור המנהל
+          </h2>
+          {waitingDresses.length > 0 ? (
+            <div style={{ marginTop: "19px" }}>
+              <div className="container containerProducts">
+                <div className="row">
+                  {waitingDresses.map((dress, i) => {
+                    console.log(dress.images.imgCollection[0].url);
 
-                  if (dress.dressSet == "" || dress.dressSet == undefined)
-                    return (
-                      <Link
-                        key={i}
-                        style={{ color: "#b74160" }}
-                        // to="/dress"
-                        state={dress}
-                      >
-                        {" "}
-                        <div
+                    if (dress.dressSet === "" || dress.dressSet === undefined)
+                      return (
+                        <Link
                           key={i}
-                          className="boxO col-lg-4 col-sm-6 detailDiv"
+                          style={{ color: "#b74160" }}
+                          // to="/dress"
+                          state={dress}
                         >
                           <div
-                            style={{
-                              backgroundImage: `url(${dress.images.imgCollection[0].url})`,
-                            }}
-                            className="productUp"
-                          ></div>
-                          <div className="productDown">
-                            <h3>{dress.description}</h3>
-                            <p
+                            key={i}
+                            className="boxO col-lg-4 col-sm-6 detailDiv"
+                          >
+                            <div
                               style={{
-                                fontSize: "18px",
-                                paddingBottom: "4px",
-                                fontWeight: "bold",
+                                backgroundImage: `url(${dress.images.imgCollection[0].url})`,
                               }}
-                            >
-                              ₪{dress.price}
-                            </p>
-                            <p>Size:{dress.size}</p>
+                              className="productUp"
+                            ></div>
+                            <div className="productDown">
+                              <h3>{dress.description}</h3>
+                              <p
+                                style={{
+                                  fontSize: "18px",
+                                  paddingBottom: "4px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                ₪{dress.price}
+                              </p>
+                              <p>Size:{dress.size}</p>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    );
-                })}
+                        </Link>
+                      );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        ) : (
-          <>
-            <p className="messegeThereIsNotMatchDressesType">
-              {/* אין לך שמלות בהמתנה */}
-            </p>
-          </>
-        )}
-      </div>}
-      {!finished&&        <>
-          <div className="loader">
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-            <div className="face">
-              <div className="circle"></div>
-            </div>
-          </div>
-        </>
-}
-    </div>)
+          ) : (
+            <>
+              <p className="messegeThereIsNotMatchDressesType">
+                {/* אין לך שמלות בהמתנה */}
+              </p>
+            </>
+          )}
+        </div>
+      )}
+      {!finished && <Loader />}
+    </div>
   );
 });
