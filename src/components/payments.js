@@ -48,14 +48,14 @@ export default connect(mapStateToProps)(function Payments(props) {
   async function saveDress() {
     // אם התשלום עבר
     axios
-      .post("http://localhost:3003/images/upload-images", images, {})
+      .post(`${API_URL}/images/upload-images`, images, {})
       .then(async (res) => {
         dress.images = res.data.imagesCreated._id;
         dress.landlord = user._id;
         try {
           delete dress.defaultImage;
           await axios
-            .post("http://localhost:3003/dresses/addDress", dress)
+            .post(`${API_URL}/dresses/addDress`, dress)
             .then(async (resp) => {
               alert(
                 "יש 😊 הצלחת להעלות את השמלה לאתר, השמלה רק צריכה לעבור את אישור המנהל."
@@ -78,10 +78,10 @@ export default connect(mapStateToProps)(function Payments(props) {
       user.startDate = new Date();
     }
     await axios
-      .put("http://localhost:3003/users/updateUser/" + user._id, user)
+      .put(`${API_URL}/users/updateUser/` + user._id, user)
       .then(async (res) => {
         await axios
-          .post("http://localhost:3003/payments/addPayment", tempPayment)
+          .post(`${API_URL}/payments/addPayment`, tempPayment)
           .then((resPay) => {
             navigate("/allProducts");
           });
@@ -97,12 +97,12 @@ export default connect(mapStateToProps)(function Payments(props) {
 
     await axios
       .put(
-        "http://localhost:3003/dresses/updateDress/" + tempDress._id,
+        `${API_URL}/dresses/updateDress/` + tempDress._id,
         tempDress
       )
       .then(async (res) => {
         await axios
-          .post("http://localhost:3003/payments/addPayment", tempPayment)
+          .post(`${API_URL}/payments/addPayment`, tempPayment)
           .then((resPay) => {
             navigate("/allProducts");
           });

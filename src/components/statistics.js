@@ -6,6 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { Bar } from "react-chartjs-2";
 import {CategoryScale,registerables} from 'chart.js'; 
+import { API_URL } from '../services/apiService';
 function Statistics() {
   ChartJS.register(ArcElement, Tooltip, Legend,CategoryScale,...registerables);
   // Chart.register(CategoryScale);
@@ -98,7 +99,7 @@ function Statistics() {
 
     }, [])
     async function getPayments() {
-        await axios.get("http://localhost:3003/payments/getPayments").then((resPay)=>{
+        await axios.get(`${API_URL}/payments/getPayments`).then((resPay)=>{
             setPayments(resPay.data)
             console.log(resPay.data);
             let ansAVGSubscriptions = resPay.data.reduce((a, b)=>{
@@ -110,7 +111,7 @@ function Statistics() {
     }
 
     async function getDresses() {
-        await axios.get("http://localhost:3003/dresses/getDresses").then(async(res)=>{
+        await axios.get(`${API_URL}/dresses/getDresses`).then(async(res)=>{
             let now = new Date()
             let relevantDresses = res.data.filter((d)=>d.endTime > now
             // && d.status ==1
@@ -118,7 +119,7 @@ function Statistics() {
             setDresses(relevantDresses)
             console.log(res.data);
             let cnt = 0
-            await axios.get("http://localhost:3003/styles/getStyles").then((resStyles)=>{
+            await axios.get(`${API_URL}/styles/getStyles`).then((resStyles)=>{
             let tempPercentsStyles = resStyles.data.map((style =>{
               let cntTemp = 0;
               for(var i = 0; i < res.data.length; i++) {

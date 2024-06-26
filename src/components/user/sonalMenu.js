@@ -30,7 +30,7 @@ export default connect(mapStateToProps)(function SonalMenu(props) {
     if (
       location.state &&
       location.state.navigate &&
-      location.state.navigate == "subscription"
+      location.state.navigate === "subscription"
     ) {
       setChoosenNav("sonalSubscription");
     }
@@ -42,16 +42,16 @@ export default connect(mapStateToProps)(function SonalMenu(props) {
         <li
           onClick={() => setChoosenNav("favorateDresses")}
           className={`liSideBar ${
-            choosenNav == "favorateDresses" ? "activeLi" : ""
+            choosenNav === "favorateDresses" ? "activeLi" : ""
           }`}
         >
-          שמלות שאהבתי <FavoriteBorderOutlined />{" "}
+          שמלות שאהבתי <FavoriteBorderOutlined />
         </li>
         <li
           onClick={() => setChoosenNav("myDresses")}
-          className={`liSideBar ${choosenNav == "myDresses" ? "activeLi" : ""}`}
+          className={`liSideBar ${choosenNav === "myDresses" ? "activeLi" : ""}`}
         >
-          שמלות לפרסום <Checkroom />{" "}
+          שמלות לפרסום <Checkroom />
         </li>
         <li
           onClick={() => setChoosenNav("sonalSubscription")}
@@ -72,13 +72,13 @@ export default connect(mapStateToProps)(function SonalMenu(props) {
         </li>
       </ul>
       <div className="contentSonal">
-        {choosenNav == "sonalDetails" ? (
+        {choosenNav === "sonalDetails" ? (
           <SonalDetails />
-        ) : choosenNav == "sonalSubscription" ? (
+        ) : choosenNav === "sonalSubscription" ? (
           <SonalSubscription />
-        ) : choosenNav == "favorateDresses" ? (
+        ) : choosenNav === "favorateDresses" ? (
           <FavorateDresses />
-        ) : choosenNav == "myDresses" ? (
+        ) : choosenNav === "myDresses" ? (
           <MyDresses />
         ) : (
           <SonalDetails />

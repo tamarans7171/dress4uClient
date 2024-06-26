@@ -23,11 +23,11 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
 
   async function getDresses() {
     await axios
-      .get("http://localhost:3003/dresses/getDresses")
+      .get(`${API_URL}/dresses/getDresses`)
       .then(async (res) => {
         setDresses(res.data);
         await axios
-          .get("http://localhost:3003/areas/getareas")
+          .get(`${API_URL}/areas/getareas`)
           .then(async (areas) => {
             console.log(areas.data);
             // מקבל את כל תתי האזורים
@@ -62,7 +62,7 @@ export default connect(mapStateToProps)(function FavorateDresses(props) {
   async function addViesCounter(dress) {
     dress.viewCounter += 1;
     await axios
-      .put("http://localhost:3003/dresses/updateDress/" + dress._id, dress)
+      .put(`${API_URL}/dresses/updateDress/` + dress._id, dress)
       .then((ans) => {
         console.log(ans.data);
       });

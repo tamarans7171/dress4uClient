@@ -17,6 +17,7 @@ import {
   AccessTime,
 } from "@mui/icons-material";
 import "./dress.css";
+import { API_URL } from "../services/apiService";
 // import './carousel.css'
 
 function mapStateToProps(state) {
@@ -82,7 +83,7 @@ export default connect(mapStateToProps)(function Dress(props) {
     console.log(dress._id+" 😁");
     await axios
       .get(
-        "http://localhost:3003/comments/getCommentByDressId/" + dress._id,
+        `${API_URL}/comments/getCommentByDressId/` + dress._id,
         comment
       )
       .then((res) => {
@@ -111,7 +112,7 @@ export default connect(mapStateToProps)(function Dress(props) {
   async function checkPerferenc() {
     axios
       .get(
-        "http://localhost:3003/perferences/getPerferenceByUserAndDress/" +
+        `${API_URL}/perferences/getPerferenceByUserAndDress/` +
           user._id +
           "/" +
           dress._id
@@ -128,7 +129,7 @@ export default connect(mapStateToProps)(function Dress(props) {
 
   async function saveComment() {
     await axios
-      .post("http://localhost:3003/comments/addComment", comment)
+      .post(`${API_URL}/comments/addComment`, comment)
       .then((res) => {});
   }
 
@@ -141,7 +142,7 @@ export default connect(mapStateToProps)(function Dress(props) {
       }
       await axios
         .get(
-          `http://localhost:3003/payments/getPaymentsWithSubscriptionToComment/${user._id}/${dress._id}`
+          `${API_URL}/payments/getPaymentsWithSubscriptionToComment/${user._id}/${dress._id}`
         )
         .then((resp) => {
           if (resp.data) setHasPermitionComment(true);
@@ -162,14 +163,14 @@ export default connect(mapStateToProps)(function Dress(props) {
           date: new Date(),
         };
         await axios
-          .post("http://localhost:3003/perferences/addPerference", newPerference)
+          .post(`${API_URL}/perferences/addPerference`, newPerference)
           .then((res) => {
             console.log(res.data);
           });
       } else {
         await axios
           .delete(
-            "http://localhost:3003/perference/deletePerference/" + idPerference
+            `${API_URL}/perference/deletePerference/` + idPerference
           )
           .then((res2) => {
             console.log(res2.data);
@@ -193,7 +194,7 @@ export default connect(mapStateToProps)(function Dress(props) {
     }
     await axios
       .get(
-        `http://localhost:3003/payments/getPaymentsWithSubscriptionToDress/${user._id}/${dress._id}`
+        `${API_URL}/payments/getPaymentsWithSubscriptionToDress/${user._id}/${dress._id}`
       )
       .then((resp) => {
         if (resp.data) setHasPermitionNumber(true);

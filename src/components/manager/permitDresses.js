@@ -10,6 +10,7 @@ import {
   DoneOutline,
 } from "@mui/icons-material";
 import Loader from "../loader";
+import { API_URL } from "../../services/apiService";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -42,7 +43,7 @@ function PermitDresses() {
   }, []);
 
   async function getDressesToPremit() {
-    await axios.get("http://localhost:3003/dresses/getDresses").then((res) => {
+    await axios.get(`${API_URL}/dresses/getDresses`).then((res) => {
       let DressesToPermit = res.data.filter((dress) => dress.status === 0);
       setDresses(DressesToPermit);
       setLoading(false);
@@ -88,14 +89,14 @@ function PermitDresses() {
       }
       await axios
         .put(
-          "http://localhost:3003/dresses/updateDress/" +
+          `${API_URL}/dresses/updateDress/` +
             tempDresses[dressIndex]._id,
           tempDresses[dressIndex]
         )
         .then(async (ans) => {
           await axios
             .put(
-              "http://localhost:3003/images/updateImages/" + dress.images._id,
+              `${API_URL}/images/updateImages/` + dress.images._id,
               dress.images
             )
             .then(async (resImages) => {
@@ -110,7 +111,7 @@ function PermitDresses() {
                   dress: dress._id,
                 };
                 await axios
-                  .post("http://localhost:3003/payments/addPayment", newPayment)
+                  .post(`${API_URL}/payments/addPayment`, newPayment)
                   .then((resPay) => {});
               }
             });

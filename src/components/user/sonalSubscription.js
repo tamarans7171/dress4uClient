@@ -21,6 +21,7 @@ import date from "date-and-time";
 import Fab from "@mui/material/Fab";
 import DoneOutline from "@mui/icons-material/DoneOutline";
 import {FocusTrap} from '@mui/base/FocusTrap'
+import { API_URL } from "../../services/apiService";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -40,7 +41,7 @@ export default connect(mapStateToProps)(function SonalSubscription(props) {
   const [stateOfUser, setStateOfUser] = useState();
   const [endSubscription, setendSubscription] = useState(null);
   useEffect(() => {
-    if (user._id == undefined) {
+    if (user._id === undefined) {
       setOpen(true);
     }
 
@@ -110,7 +111,7 @@ export default connect(mapStateToProps)(function SonalSubscription(props) {
     });
 
     await axios
-      .put("http://localhost:3030/user/updateUser/" + user._id, user)
+      .put(`${API_URL}/user/updateUser/` + user._id, user)
       .then((res) => {
         console.log(res.data);
         dispatch({ type: "UPDATEUSER", payload: user });

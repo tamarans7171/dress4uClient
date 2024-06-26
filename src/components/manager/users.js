@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import { TableVirtuoso } from 'react-virtuoso';
 import { styled } from '@mui/material/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { API_URL } from '../../services/apiService';
 function Users() {
     const [users, setUsers] = useState()
     
@@ -20,7 +21,7 @@ function Users() {
 
 
     async function getUsers() {
-            await axios.get("http://localhost:3003/users/getUsers").then((resp) =>{
+            await axios.get(`${API_URL}/users/getUsers`).then((resp) =>{
             let usersTemp = resp.data.map((user=>{
               return {...user, address: user.address.street + " " + user.address.numHouse + " " + user.address.city}
             }))    

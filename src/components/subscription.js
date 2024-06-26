@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Alert, AlertTitle,Stack, Button, Dialog, DialogActions, DialogTitle,Slide} from "@mui/material";
 import date from "date-and-time";
 import {FocusTrap} from '@mui/base/FocusTrap'
+import { API_URL } from "../services/apiService";
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -86,7 +87,7 @@ export default connect(mapStateToProps)(function Subscription(props) {
     });
 
     await axios
-      .put("http://localhost:3003/user/updateUser/" + user._id, user)
+      .put(`${API_URL}/user/updateUser/` + user._id, user)
       .then((res) => {
         dispatch({ type: "UPDATEUSER", payload: user });
       });

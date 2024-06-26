@@ -3,6 +3,7 @@ import axios from "axios";
 import { CirclePicker } from "react-color";
 import MultiRangeSlider from "./slider/src/component/multiRangeSlider/MultiRangeSlider";
 import "./slider/src/component/multiRangeSlider/multiRangeSlider.css";
+import { API_URL } from "../services/apiService";
 function Filters(props) {
   const [checkedStyles, setCheckedStyles] = useState();
 
@@ -23,7 +24,7 @@ function Filters(props) {
 
   // }, [filterStyles])
   async function getColors() {
-    await axios.get("http://localhost:3003/colors/getColors").then((res) => {
+    await axios.get(`${API_URL}/colors/getColors`).then((res) => {
       let temp = {};
       console.log(res.data);
       res.data.forEach((t) => {
@@ -37,7 +38,7 @@ function Filters(props) {
   }
 
   async function getStyles() {
-    await axios.get("http://localhost:3003/styles/getStyles").then((res) => {
+    await axios.get(`${API_URL}/styles/getStyles`).then((res) => {
       setStyles(res.data);
       let tempStyles = res.data.map((s) => false);
       setCheckedStyles(tempStyles);
